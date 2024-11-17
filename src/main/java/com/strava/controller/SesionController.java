@@ -28,7 +28,7 @@ public class SesionController {
                 sesionDTO.getDeporte(),
                 sesionDTO.getDistancia(),
                 sesionDTO.getFechaInicio(),
-                sesionDTO.getHoraInicio(),
+                sesionDTO.gethoraInicio(),
                 sesionDTO.getDuracion()
         );
         return ResponseEntity.status(201).body(nuevaSesion);

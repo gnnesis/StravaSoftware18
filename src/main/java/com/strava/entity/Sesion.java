@@ -4,13 +4,13 @@ public class Sesion {
     private String id; // Identificador único de la sesión
     private String titulo; // Título de la sesión
     private String deporte; // Tipo de deporte: "cycling" o "running"
-    private Double distancia; // Distancia en kilómetros
+    private double distancia; // Distancia en kilómetros
     private String fechaInicio; // Fecha de inicio en formato "YYYY-MM-DD"
     private String horaInicio; // Hora de inicio en formato "HH:mm"
-    private Integer duracion; // Duración en minutos
+    private double duracion; // Duración en minutos
 
     // Constructor completo
-    public Sesion(String id, String titulo, String deporte, Double distancia, String fechaInicio, String horaInicio, Integer duracion) {
+    public Sesion(String id, String titulo, String deporte, double distancia, String fechaInicio, String horaInicio, double duracion) {
         this.id = id;
         this.titulo = titulo;
         this.deporte = deporte;
@@ -18,11 +18,6 @@ public class Sesion {
         this.fechaInicio = fechaInicio;
         this.horaInicio = horaInicio;
         this.duracion = duracion;
-    }
-
-    // Constructor básico
-    public Sesion(String id, String titulo, String deporte) {
-        this(id, titulo, deporte, null, null, null, null);
     }
 
     // Getters y Setters
@@ -74,11 +69,11 @@ public class Sesion {
         this.horaInicio = horaInicio;
     }
 
-    public Integer getDuracion() {
+    public double getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(Integer duracion) {
+    public void setDuracion(double duracion) {
         this.duracion = duracion;
     }
 

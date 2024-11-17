@@ -7,17 +7,19 @@ public class SesionDTO {
     private String titulo; // Título de la sesión
     private String deporte; // Tipo de deporte
     private double distancia; // Distancia recorrida (en kilómetros)
-    private LocalDateTime fechaInicio; // Fecha y hora de inicio
+    private String fechaInicio; // Fecha y hora de inicio
+    private String horaInicio;
     private double duracion; // Duración de la sesión (en minutos)
 
     // Constructor
     public SesionDTO() {}
 
-    public SesionDTO(String titulo, String deporte, double distancia, LocalDateTime fechaInicio, double duracion) {
+    public SesionDTO(String titulo, String deporte, double distancia, String fechaInicio, String horaInicio,double duracion) {
         this.titulo = titulo;
         this.deporte = deporte;
         this.distancia = distancia;
         this.fechaInicio = fechaInicio;
+        this.horaInicio= horaInicio;
         this.duracion = duracion;
     }
 
@@ -46,14 +48,23 @@ public class SesionDTO {
         this.distancia = distancia;
     }
 
-    public LocalDateTime getFechaInicio() {
+    public String getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(LocalDateTime fechaInicio) {
+    public void setFechaInicio(String fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
+	public String gethoraInicio() {
+        return horaInicio;
+    }
+	
+	public void setHoraInicio(String horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+	
+	
     public double getDuracion() {
         return duracion;
     }

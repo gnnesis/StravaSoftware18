@@ -22,11 +22,11 @@ public class SesionService {
      * @param distancia    Distancia recorrida en kilómetros.
      * @param fechaInicio  Fecha de inicio de la sesión (formato: "YYYY-MM-DD").
      * @param horaInicio   Hora de inicio de la sesión (formato: "HH:mm:ss").
-     * @param duracion     Duración de la sesión en minutos.
+     * @param d     Duración de la sesión en minutos.
      * @return La sesión creada.
      */
-    public Sesion crearSesion(String titulo, String deporte, double distancia, String fechaInicio, String horaInicio, int duracion) {
-        Sesion nuevaSesion = new Sesion(titulo, deporte, horaInicio, distancia, fechaInicio, horaInicio, duracion);
+    public Sesion crearSesion(String titulo, String deporte, double distancia, String fechaInicio, String horaInicio, double duracion) {
+        Sesion nuevaSesion = new Sesion(deporte, titulo, horaInicio, distancia, fechaInicio, horaInicio, duracion);
         sesiones.add(nuevaSesion);
         return nuevaSesion;
     }

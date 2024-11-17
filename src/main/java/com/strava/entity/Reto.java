@@ -6,18 +6,16 @@ public class Reto {
 
     private Long id;
     private String name;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private Float targetDistance;
     private Integer targetDuration;
-    private String sport;  // Puede ser "cycling" o "running"
+    private String sport;  // "cycling" o "running"
 
-    public Reto() {
-        // Constructor vacío para JPA
-    }
 
     // Constructor con todos los atributos
-    public Reto(String name, Date startDate, Date endDate, Float targetDistance, Integer targetDuration, String sport) {
+    public Reto(long id, String name, String startDate, String endDate, Float targetDistance, Integer targetDuration, String sport) {
+    	this.id = id;
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -43,19 +41,19 @@ public class Reto {
         this.name = name;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 

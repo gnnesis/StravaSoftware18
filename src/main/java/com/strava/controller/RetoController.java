@@ -24,6 +24,7 @@ public class RetoController {
     @PostMapping
     public ResponseEntity<Reto> crearReto(@RequestBody RetoDTO retoDTO) {
         Reto nuevoReto = retoService.crearReto(
+        		retoDTO.getId(),
                 retoDTO.getNombre(),
                 retoDTO.getFechaInicio(),
                 retoDTO.getFechaFin(),
