@@ -3,14 +3,13 @@ package com.strava.entity;
 public class Usuario {
     private String email;
     private String nombre;
-    private String fechaNacimiento; // Formato: "YYYY-MM-DD"
-    private Double peso; // Peso en kg (opcional)
-    private Integer altura; // Altura en cm (opcional)
-    private Integer frecuenciaMaxima; // Máxima frecuencia cardíaca en bpm (opcional)
-    private Integer frecuenciaReposo; // Frecuencia cardíaca en reposo en bpm (opcional)
+    private String fechaNacimiento; //"YYYY-MM-DD"
+    private Double peso; 
+    private Integer altura; 
+    private Integer frecuenciaMaxima;
+    private Integer frecuenciaReposo;
     private String password;
 
-    // Constructor completo
     public Usuario(String email, String nombre, String fechaNacimiento, Double peso, Integer altura, Integer frecuenciaMaxima, Integer frecuenciaReposo, String password) {
         this.email = email;
         this.nombre = nombre;
@@ -22,12 +21,11 @@ public class Usuario {
         this.password = password;
     }
 
-    // Constructor básico (para usos opcionales)
     public Usuario(String email, String nombre, String fechaNacimiento, String password) {
         this(email, nombre, fechaNacimiento, null, null, null, null, password);
     }
 
-    // Getters y Setters
+
     public String getEmail() {
         return email;
     }
@@ -92,7 +90,6 @@ public class Usuario {
 		this.password = password;
 	}
 
-    // Método toString para facilitar la impresión de datos
     @Override
     public String toString() {
         return "Usuario{" +

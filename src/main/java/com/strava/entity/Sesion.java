@@ -1,15 +1,15 @@
 package com.strava.entity;
 
 public class Sesion {
-    private String id; // Identificador único de la sesión
-    private String titulo; // Título de la sesión
-    private String deporte; // Tipo de deporte: "cycling" o "running"
-    private double distancia; // Distancia en kilómetros
-    private String fechaInicio; // Fecha de inicio en formato "YYYY-MM-DD"
-    private String horaInicio; // Hora de inicio en formato "HH:mm"
-    private double duracion; // Duración en minutos
+    private String id;
+    private String titulo;
+    private String deporte; //"cycling" o "running"
+    private double distancia;
+    private String fechaInicio; //"YYYY-MM-DD"
+    private String horaInicio; //"HH:mm"
+    private double duracion; 
 
-    // Constructor completo
+  
     public Sesion(String id, String titulo, String deporte, double distancia, String fechaInicio, String horaInicio, double duracion) {
         this.id = id;
         this.titulo = titulo;
@@ -20,7 +20,7 @@ public class Sesion {
         this.duracion = duracion;
     }
 
-    // Getters y Setters
+
     public String getId() {
         return id;
     }

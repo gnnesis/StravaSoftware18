@@ -16,18 +16,18 @@ public class RetoFacade {
         this.retoService = retoService;
     }
 
-    // Crear un nuevo reto
+
     public Reto crearReto(Reto retoDTO) {
-        return retoService.crearReto(retoDTO); // Llama al servicio para crear el reto
+        return retoService.crearReto(retoDTO); 
     }
 
-    // Obtener información sobre un reto activo
+
     public RetoDTO obtenerRetoActivo(String nombre) {
-        return retoService.obtenerRetoActivo(nombre); // Llama al servicio para obtener el reto activo
+        return retoService.obtenerRetoActivo(nombre);
     }
 
-    // Aceptar un reto
+
     public String aceptarReto(String nombre) {
-        return retoService.aceptarReto(nombre); // Llama al servicio para aceptar un reto
+        return retoService.aceptarReto(nombre);
     }
 }

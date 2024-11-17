@@ -31,9 +31,7 @@ public class SesionController {
                 sesionDTO.gethoraInicio(),
                 sesionDTO.getDuracion()
         );
-        //que compruebe si el deporte es cycling o running y si no lo es que devuelva un error
         if (!sesionDTO.getDeporte().equals("cycling") && !sesionDTO.getDeporte().equals("running")) {
-        	//que en el body ponga que el deporte no es válido
         	
             return ResponseEntity.status(400).body(null);
         }

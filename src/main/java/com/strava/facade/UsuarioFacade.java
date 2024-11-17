@@ -15,18 +15,15 @@ public class UsuarioFacade {
         this.usuarioService = usuarioService;
     }
 
-    // Registrar un nuevo usuario
     public UsuarioDTO registrarUsuario(UsuarioDTO usuarioDTO) {
-        return usuarioService.registrarUsuario(usuarioDTO); // Llama al servicio para registrar el usuario
+        return usuarioService.registrarUsuario(usuarioDTO);
     }
 
-    // Iniciar sesión
     public String iniciarSesion(String email, String password) {
-        return usuarioService.iniciarSesion(email, password); // Llama al servicio para iniciar sesión y obtener token
+        return usuarioService.iniciarSesion(email, password);
     }
 
-    // Cerrar sesión
     public void cerrarSesion(String token) {
-        usuarioService.cerrarSesion(token); // Llama al servicio para simular el cierre de sesión
+        usuarioService.cerrarSesion(token);
     }
 }

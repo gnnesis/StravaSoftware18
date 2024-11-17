@@ -5,11 +5,11 @@ import java.time.LocalDate;
 public class RetoDTO {
 
 	private long id;
-    private String nombre; // Nombre del reto
-    private String fechaInicio; // Fecha de inicio del reto
-    private String fechaFin; // Fecha de fin del reto
-    private Float distancia; // Distancia del reto (en kilómetros)
-    private Integer tiempoObjetivo; // Tiempo objetivo en minutos
+    private String nombre; 
+    private String fechaInicio;
+    private String fechaFin;
+    private Float distancia;
+    private Integer tiempoObjetivo;
     private String deporte;
     
     public RetoDTO() {
@@ -72,6 +72,6 @@ public class RetoDTO {
 	}
     
 	
-}// Deporte asociado al reto
+}
 
  

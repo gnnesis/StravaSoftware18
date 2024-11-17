@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 @Service
 public class RetoService {
 
-    // Simulación de almacenamiento en memoria
     private List<Reto> retos = new ArrayList<>();
 
     /**
@@ -35,8 +34,8 @@ public class RetoService {
     
     
     public Reto crearReto(Reto reto) {
-        retos.add(reto);  // Agregar el reto a la lista o a la base de datos
-        return reto;  // Retornar el reto creado
+        retos.add(reto); 
+        return reto; 
     }
 
     /**
@@ -62,7 +61,6 @@ public class RetoService {
      *
      * @param challengeId El ID del reto a aceptar.
      */
- // En el servicio
     public String aceptarReto(String nombre) {
         Optional<Reto> retoOpt = retos.stream()
                 .filter(reto -> reto.getNombre().equalsIgnoreCase(nombre))
@@ -70,6 +68,7 @@ public class RetoService {
 
         if (retoOpt.isPresent()) {
             return "Reto aceptado: " + retoOpt.get().getNombre();
+            
         } else {
             throw new IllegalArgumentException("El reto con nombre " + nombre + " no existe.");
         }
@@ -90,6 +89,9 @@ public class RetoService {
 		return null;
 	}
 
+	public List<Reto> obtenerRetosAceptados() {
+        return retos;
+    }
 
 	
 }

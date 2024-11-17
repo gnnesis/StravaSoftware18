@@ -32,7 +32,6 @@ public class RetoController {
      */
     @PostMapping
     public ResponseEntity<Reto> crearReto(@RequestBody RetoDTO retoDTO) {
-        // El objeto RetoDTO se pasa como parámetro
         Reto nuevoReto = new Reto(retoDTO.getId(), retoDTO.getNombre(), retoDTO.getFechaInicio(),
                 retoDTO.getFechaFin(), retoDTO.getDistancia(), retoDTO.getTiempoObjetivo(), retoDTO.getDeporte());
         Reto retoCreado = retoService.crearReto(nuevoReto);
@@ -49,11 +48,9 @@ public class RetoController {
             @RequestParam(name = "fechaInicio", required = false) String fechaInicio,
             @RequestParam(name = "fechaFin", required = false) String fechaFin
     ) {
-        // Convertir las fechas de inicio y fin a LocalDate
         LocalDate inicio = (fechaInicio != null) ? LocalDate.parse(fechaInicio) : null;
         LocalDate fin = (fechaFin != null) ? LocalDate.parse(fechaFin) : null;
         
-        // Llamar al servicio para obtener los retos activos
         List<Reto> retos = retoService.obtenerRetosActivos(deporte, inicio, fin);
         
         return ResponseEntity.ok(retos);
@@ -64,15 +61,22 @@ public class RetoController {
      */
     @PostMapping("/{challengeId}/accept")
     public String aceptarReto(@PathVariable("challengeId") String nombre) {
-        // Buscar el reto por nombre
         for (Reto reto : retoService.obtenerRetosActivos(null, null, null)) {
             if (reto.getNombre().equalsIgnoreCase(nombre)) {
                 return "Reto aceptado: " + reto.getNombre();
+               
             }
         }
         throw new IllegalArgumentException("El reto con nombre " + nombre + " no existe.");
     }
-
+    /**
+     * Consulta de retos aceptados
+     */
+    @GetMapping("/accepted")
+    public ResponseEntity<List<Reto>> obtenerRetosAceptados() {
+        List<Reto> retosAceptados = retoService.obtenerRetosAceptados();
+        return ResponseEntity.ok(retosAceptados);
+    }
 
 
 

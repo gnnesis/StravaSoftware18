@@ -4,14 +4,14 @@ import java.time.LocalDateTime;
 
 public class SesionDTO {
 
-    private String titulo; // Título de la sesión
-    private String deporte; // Tipo de deporte
-    private double distancia; // Distancia recorrida (en kilómetros)
-    private String fechaInicio; // Fecha y hora de inicio
+    private String titulo;
+    private String deporte;
+    private double distancia;
+    private String fechaInicio;
     private String horaInicio;
-    private double duracion; // Duración de la sesión (en minutos)
+    private double duracion;
 
-    // Constructor
+  
     public SesionDTO() {}
 
     public SesionDTO(String titulo, String deporte, double distancia, String fechaInicio, String horaInicio,double duracion) {
@@ -23,7 +23,7 @@ public class SesionDTO {
         this.duracion = duracion;
     }
 
-    // Getters y setters
+  
     public String getTitulo() {
         return titulo;
     }

@@ -30,13 +30,11 @@ public class AuthController {
     
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UsuarioDTO usuarioDTO) {
-        // Validar las credenciales
         Usuario usuario = usuarioService.autenticarUsuario(usuarioDTO.getEmail(), usuarioDTO.getPassword());
         
         if (usuario == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
         }
-        // Si las credenciales son correctas, asignamos el usuario autenticado
         usuarioAutenticado = usuario;
           return ResponseEntity.ok(usuarioDTO.getEmail() + " ha iniciado sesión");
     }
@@ -44,14 +42,11 @@ public class AuthController {
     @PostMapping("/logout")
     public ResponseEntity<String> logout() {
         if (usuarioAutenticado == null) {
-            // Si no hay ningún usuario autenticado, devolvemos un error
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No hay sesión activa");
         }
 
-        // Si hay un usuario autenticado, invalidamos la sesión
-        usuarioAutenticado = null;  // "Logout" simple, eliminamos el usuario logueado
+        usuarioAutenticado = null;
 
-        // Respondemos con un mensaje indicando que el logout fue exitoso
         return ResponseEntity.ok("Logout exitoso");
     }
 }

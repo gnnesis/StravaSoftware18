@@ -1,20 +1,16 @@
 package com.strava.dto;
 
 
-// Clase que representa una respuesta de la API
-
 public class RespuestaDTO {
 
-    private String codigo;  // Ejemplo: "200 OK"
-    private String mensaje; // Mensaje descriptivo del resultado de la operación
+    private String codigo;
+    private String mensaje;
 
-    // Constructor
     public RespuestaDTO(String codigo, String mensaje) {
         this.codigo = codigo;
         this.mensaje = mensaje;
     }
 
-    // Getters y setters
     public String getCodigo() {
         return codigo;
     }

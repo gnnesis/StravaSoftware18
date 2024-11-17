@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 @Service
 public class SesionService {
 
-    // Simulación de almacenamiento en memoria
     private final List<Sesion> sesiones = new ArrayList<>();
 
     /**

@@ -11,7 +11,6 @@ import java.util.Optional;
 @Service
 public class UsuarioService {
 
-    // Simulación de almacenamiento en memoria
     private final List<Usuario> usuarios = new ArrayList<>();
 
     /**
@@ -29,10 +28,10 @@ public class UsuarioService {
      */
     public Usuario registrarUsuario(String email, String nombre, String fechaNacimiento,
             Double peso, Integer altura, Integer frecuenciaMaxima, Integer frecuenciaReposo, String password) {
-		// Crear un nuevo usuario
+		
 		Usuario nuevoUsuario = new Usuario(email, nombre, fechaNacimiento, peso, altura, frecuenciaMaxima, frecuenciaReposo, password);
-		usuarios.add(nuevoUsuario); // Agregarlo a la lista
-		return nuevoUsuario; // Retornar el usuario creado
+		usuarios.add(nuevoUsuario);
+		return nuevoUsuario; 
     }
 
     /**
@@ -71,7 +70,6 @@ public class UsuarioService {
 
         Usuario usuario = obtenerUsuarioPorEmail(email);
 
-        // Actualizar los campos solo si se proporcionan nuevos valores
         if (nombre != null) usuario.setNombre(nombre);
         if (peso != null) usuario.setPeso(peso);
         if (altura != null) usuario.setAltura(altura);
@@ -103,18 +101,16 @@ public class UsuarioService {
 	}
 	
 	public Usuario autenticarUsuario(String email, String password) {
-	    // Buscar al usuario por email
 	    Usuario usuario = usuarios.stream()
 	            .filter(u -> u.getEmail().equalsIgnoreCase(email))
 	            .findFirst()
 	            .orElse(null);
 
-	    // Validar que el usuario exista y que la contraseña coincida
 	    if (usuario != null && usuario.getPassword().equals(password)) {
-	        return usuario; // Retornar el usuario si las credenciales son correctas
+	        return usuario;
 	    }
 
-	    return null; // Si no existe o la contraseña no es correcta, retornar null
+	    return null;
 	}
 
 

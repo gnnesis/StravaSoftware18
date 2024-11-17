@@ -5,8 +5,8 @@ public class UsuarioDTO {
     private String email;
     private String nombre;
     private String fechaNacimiento;
-    private double peso;  // Peso en kg
-    private int altura;  // Altura en cm
+    private double peso;
+    private int altura;
     private int frecuenciaCardiacaMaxima;
     private int frecuenciaCardiacaReposo;
     private String password;
@@ -14,7 +14,7 @@ public class UsuarioDTO {
 	public UsuarioDTO() {
 	}
 	
-    // Constructor
+ 
     public UsuarioDTO(String email, String nombre, String fechaNacimiento, double peso, int altura, 
                       int frecuenciaCardiacaMaxima, int frecuenciaCardiacaReposo, String password) {
         this.email = email;
