@@ -12,6 +12,10 @@ public class RetoDTO {
     private Integer tiempoObjetivo; // Tiempo objetivo en minutos
     private String deporte;
     
+    public RetoDTO() {
+    	
+    }
+    
 	public RetoDTO(long id, String nombre, String fechaInicio, String fechaFin, Float distancia, Integer tiempoObjetivo,
 			String deporte) {
 		super();

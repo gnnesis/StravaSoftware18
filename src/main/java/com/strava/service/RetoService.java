@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class RetoService {
 
     // Simulación de almacenamiento en memoria
-    private final List<Reto> retos = new ArrayList<>();
+    private List<Reto> retos = new ArrayList<>();
 
     /**
      * Crea un nuevo reto y lo guarda en la lista de retos.
@@ -27,10 +27,16 @@ public class RetoService {
      * @param deporte       Tipo de deporte ("cycling" o "running").
      * @return El reto creado.
      */
-    public Reto crearReto(long id, String nombre, String fechaInicio, String fechaFin, float distancia, Integer tiempoObjetivo, String deporte) {
-        Reto nuevoReto = new Reto(id, nombre, fechaInicio, fechaFin, distancia, tiempoObjetivo, deporte);
-        retos.add(nuevoReto);
-        return nuevoReto;
+//    public Reto crearReto(long id, String nombre, String fechaInicio, String fechaFin, float distancia, Integer tiempoObjetivo, String deporte) {
+//        Reto nuevoReto = new Reto(id, nombre, fechaInicio, fechaFin, distancia, tiempoObjetivo, deporte);
+//        retos.add(nuevoReto);
+//        return nuevoReto;
+//    }
+    
+    
+    public Reto crearReto(Reto reto) {
+        retos.add(reto);  // Agregar el reto a la lista o a la base de datos
+        return reto;  // Retornar el reto creado
     }
 
     /**
@@ -38,18 +44,18 @@ public class RetoService {
      * Si no se aplican filtros, devuelve los últimos 5 retos creados.
      *
      * @param deporte      Filtro opcional por tipo de deporte.
-     * @param fechaInicio  Filtro opcional por fecha de inicio.
-     * @param fechaFin     Filtro opcional por fecha de fin.
+     * @param fin 
+     * @param inicio 
      * @return Lista de retos activos filtrados.
      */
-    public List<Reto> obtenerRetosActivos(String deporte, String fechaInicio, String fechaFin) {
+    public List<Reto> obtenerRetosActivos(String deporte, LocalDate fechaInicio, LocalDate fechaFin) {
         return retos.stream()
                 .filter(reto -> (deporte == null || reto.getDeporte().equalsIgnoreCase(deporte)) &&
-                        (fechaInicio == null || reto.getFechainicio().compareTo(fechaInicio) >= 0) &&
-                        (fechaFin == null || reto.getFechaFin().compareTo(fechaFin) <= 0))
-                .limit(5) // Devolver un máximo de 5 retos
+                        (fechaInicio == null || LocalDate.parse(reto.getFechainicio()).compareTo(fechaInicio) >= 0) &&
+                        (fechaFin == null || LocalDate.parse(reto.getFechaFin()).compareTo(fechaFin) <= 0))
                 .collect(Collectors.toList());
     }
+
 
     /**
      * Marca un reto como aceptado.
@@ -63,28 +69,27 @@ public class RetoService {
                 .findFirst();
 
         if (retoOpt.isPresent()) {
-            // Lógica de aceptación de reto, puedes actualizar la entidad aquí si es necesario
             return "Reto aceptado: " + retoOpt.get().getNombre();
         } else {
             throw new IllegalArgumentException("El reto con nombre " + nombre + " no existe.");
         }
+        
+        
     }
 
    
-
-	public RetoDTO crearReto(RetoDTO retoDTO) {
+	public Reto crearReto(long id, String nombre, String fechainicio, String fechaFin, double distancia,
+			double tiempoObjetivo, String deporte) {
 		// TODO Auto-generated method stub
-		return null;
+		return null;	
 	}
+	
 
 	public RetoDTO obtenerRetoActivo(String nombre) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Reto crearReto(long id, String nombre, String  fechainicio, String fechaFin, double distancia,
-			double tiempoObjetivo, String deporte) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
+	
 }

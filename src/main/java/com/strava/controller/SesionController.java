@@ -21,7 +21,7 @@ public class SesionController {
     /**
      * Crear una nueva sesión de entrenamiento.
      */
-    @PostMapping
+    @PostMapping("/crearSesion")
     public ResponseEntity<Sesion> crearSesion(@RequestBody SesionDTO sesionDTO) {
         Sesion nuevaSesion = sesionService.crearSesion(
                 sesionDTO.getTitulo(),
@@ -31,18 +31,25 @@ public class SesionController {
                 sesionDTO.gethoraInicio(),
                 sesionDTO.getDuracion()
         );
+        //que compruebe si el deporte es cycling o running y si no lo es que devuelva un error
+        if (!sesionDTO.getDeporte().equals("cycling") && !sesionDTO.getDeporte().equals("running")) {
+        	//que en el body ponga que el deporte no es válido
+        	
+            return ResponseEntity.status(400).body(null);
+        }
+        
         return ResponseEntity.status(201).body(nuevaSesion);
     }
 
     /**
      * Obtener las últimas 5 sesiones de entrenamiento o filtrar por fecha.
      */
-    @GetMapping
+    /*@GetMapping("/obtenerSesiones")
     public ResponseEntity<List<Sesion>> obtenerSesiones(
             @RequestParam(required = false) String fechaInicio,
             @RequestParam(required = false) String fechaFin
     ) {
         List<Sesion> sesiones = sesionService.obtenerSesiones(fechaInicio, fechaFin);
         return ResponseEntity.ok(sesiones);
-    }
+    }*/
 }

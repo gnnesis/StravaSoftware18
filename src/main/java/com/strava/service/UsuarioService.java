@@ -28,17 +28,11 @@ public class UsuarioService {
      * @throws IllegalArgumentException Si el email ya está registrado.
      */
     public Usuario registrarUsuario(String email, String nombre, String fechaNacimiento,
-                                     Double peso, Integer altura, Integer frecuenciaMaxima, Integer frecuenciaReposo) {
-
-        // Verificar si el usuario ya existe
-        if (usuarios.stream().anyMatch(u -> u.getEmail().equalsIgnoreCase(email))) {
-            throw new IllegalArgumentException("El correo electrónico ya está registrado: " + email);
-        }
-
-        // Crear un nuevo usuario
-        Usuario nuevoUsuario = new Usuario(email, nombre, fechaNacimiento, peso, altura, frecuenciaMaxima, frecuenciaReposo);
-        usuarios.add(nuevoUsuario);
-        return nuevoUsuario;
+            Double peso, Integer altura, Integer frecuenciaMaxima, Integer frecuenciaReposo, String password) {
+		// Crear un nuevo usuario
+		Usuario nuevoUsuario = new Usuario(email, nombre, fechaNacimiento, peso, altura, frecuenciaMaxima, frecuenciaReposo, password);
+		usuarios.add(nuevoUsuario); // Agregarlo a la lista
+		return nuevoUsuario; // Retornar el usuario creado
     }
 
     /**
@@ -107,6 +101,22 @@ public class UsuarioService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public Usuario autenticarUsuario(String email, String password) {
+	    // Buscar al usuario por email
+	    Usuario usuario = usuarios.stream()
+	            .filter(u -> u.getEmail().equalsIgnoreCase(email))
+	            .findFirst()
+	            .orElse(null);
+
+	    // Validar que el usuario exista y que la contraseña coincida
+	    if (usuario != null && usuario.getPassword().equals(password)) {
+	        return usuario; // Retornar el usuario si las credenciales son correctas
+	    }
+
+	    return null; // Si no existe o la contraseña no es correcta, retornar null
+	}
+
 
 	public void cerrarSesion(String token) {
 		// TODO Auto-generated method stub

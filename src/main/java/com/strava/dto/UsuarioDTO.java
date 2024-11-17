@@ -9,10 +9,14 @@ public class UsuarioDTO {
     private int altura;  // Altura en cm
     private int frecuenciaCardiacaMaxima;
     private int frecuenciaCardiacaReposo;
+    private String password;
 
+	public UsuarioDTO() {
+	}
+	
     // Constructor
     public UsuarioDTO(String email, String nombre, String fechaNacimiento, double peso, int altura, 
-                      int frecuenciaCardiacaMaxima, int frecuenciaCardiacaReposo) {
+                      int frecuenciaCardiacaMaxima, int frecuenciaCardiacaReposo, String password) {
         this.email = email;
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
@@ -20,7 +24,9 @@ public class UsuarioDTO {
         this.altura = altura;
         this.frecuenciaCardiacaMaxima = frecuenciaCardiacaMaxima;
         this.frecuenciaCardiacaReposo = frecuenciaCardiacaReposo;
+        this.password = password;
     }
+
 
     // Getters y setters
     public String getEmail() {
@@ -78,4 +84,12 @@ public class UsuarioDTO {
     public void setFrecuenciaCardiacaReposo(int frecuenciaCardiacaReposo) {
         this.frecuenciaCardiacaReposo = frecuenciaCardiacaReposo;
     }
+    
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }

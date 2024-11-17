@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.strava.service.RetoService;
 import com.strava.dto.RetoDTO;
+import com.strava.entity.Reto;
 
 @Component
 public class RetoFacade {
@@ -16,7 +17,7 @@ public class RetoFacade {
     }
 
     // Crear un nuevo reto
-    public RetoDTO crearReto(RetoDTO retoDTO) {
+    public Reto crearReto(Reto retoDTO) {
         return retoService.crearReto(retoDTO); // Llama al servicio para crear el reto
     }
 

@@ -8,9 +8,10 @@ public class Usuario {
     private Integer altura; // Altura en cm (opcional)
     private Integer frecuenciaMaxima; // Máxima frecuencia cardíaca en bpm (opcional)
     private Integer frecuenciaReposo; // Frecuencia cardíaca en reposo en bpm (opcional)
+    private String password;
 
     // Constructor completo
-    public Usuario(String email, String nombre, String fechaNacimiento, Double peso, Integer altura, Integer frecuenciaMaxima, Integer frecuenciaReposo) {
+    public Usuario(String email, String nombre, String fechaNacimiento, Double peso, Integer altura, Integer frecuenciaMaxima, Integer frecuenciaReposo, String password) {
         this.email = email;
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
@@ -18,11 +19,12 @@ public class Usuario {
         this.altura = altura;
         this.frecuenciaMaxima = frecuenciaMaxima;
         this.frecuenciaReposo = frecuenciaReposo;
+        this.password = password;
     }
 
     // Constructor básico (para usos opcionales)
-    public Usuario(String email, String nombre, String fechaNacimiento) {
-        this(email, nombre, fechaNacimiento, null, null, null, null);
+    public Usuario(String email, String nombre, String fechaNacimiento, String password) {
+        this(email, nombre, fechaNacimiento, null, null, null, null, password);
     }
 
     // Getters y Setters
@@ -81,6 +83,14 @@ public class Usuario {
     public void setFrecuenciaReposo(Integer frecuenciaReposo) {
         this.frecuenciaReposo = frecuenciaReposo;
     }
+    
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
     // Método toString para facilitar la impresión de datos
     @Override
@@ -93,6 +103,7 @@ public class Usuario {
                 ", altura=" + altura +
                 ", frecuenciaMaxima=" + frecuenciaMaxima +
                 ", frecuenciaReposo=" + frecuenciaReposo +
+                ", password=" + password +
                 '}';
     }
 }
