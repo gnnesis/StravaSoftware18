@@ -6,14 +6,14 @@ public class RetoDTO {
 
 	private long id;
     private String nombre; // Nombre del reto
-    private LocalDate fechaInicio; // Fecha de inicio del reto
-    private LocalDate fechaFin; // Fecha de fin del reto
-    private double distancia; // Distancia del reto (en kilómetros)
-    private double tiempoObjetivo; // Tiempo objetivo en minutos
+    private String fechaInicio; // Fecha de inicio del reto
+    private String fechaFin; // Fecha de fin del reto
+    private Float distancia; // Distancia del reto (en kilómetros)
+    private Integer tiempoObjetivo; // Tiempo objetivo en minutos
     private String deporte;
     
-	public RetoDTO(long id, String nombre, LocalDate fechaInicio, LocalDate fechaFin, double distancia,
-			double tiempoObjetivo, String deporte) {
+	public RetoDTO(long id, String nombre, String fechaInicio, String fechaFin, Float distancia, Integer tiempoObjetivo,
+			String deporte) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -23,63 +23,50 @@ public class RetoDTO {
 		this.tiempoObjetivo = tiempoObjetivo;
 		this.deporte = deporte;
 	}
-
+	
 	public long getId() {
 		return id;
 	}
-
 	public void setId(long id) {
 		this.id = id;
 	}
-
 	public String getNombre() {
 		return nombre;
 	}
-
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
-	public LocalDate getFechaInicio() {
+	public String getFechaInicio() {
 		return fechaInicio;
 	}
-
-	public void setFechaInicio(LocalDate fechaInicio) {
+	public void setFechaInicio(String fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
-
-	public LocalDate getFechaFin() {
+	public String getFechaFin() {
 		return fechaFin;
 	}
-
-	public void setFechaFin(LocalDate fechaFin) {
+	public void setFechaFin(String fechaFin) {
 		this.fechaFin = fechaFin;
 	}
-
-	public double getDistancia() {
+	public Float getDistancia() {
 		return distancia;
 	}
-
-	public void setDistancia(double distancia) {
+	public void setDistancia(Float distancia) {
 		this.distancia = distancia;
 	}
-
-	public double getTiempoObjetivo() {
+	public Integer getTiempoObjetivo() {
 		return tiempoObjetivo;
 	}
-
-	public void setTiempoObjetivo(double tiempoObjetivo) {
+	public void setTiempoObjetivo(Integer tiempoObjetivo) {
 		this.tiempoObjetivo = tiempoObjetivo;
 	}
-
 	public String getDeporte() {
 		return deporte;
 	}
-
 	public void setDeporte(String deporte) {
 		this.deporte = deporte;
 	}
-	
+    
 	
 }// Deporte asociado al reto
 

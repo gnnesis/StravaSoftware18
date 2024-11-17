@@ -4,6 +4,7 @@ import com.strava.dto.RetoDTO;
 import com.strava.entity.Reto;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,8 +27,8 @@ public class RetoService {
      * @param deporte       Tipo de deporte ("cycling" o "running").
      * @return El reto creado.
      */
-    public Reto crearReto(String nombre, String fechaInicio, String fechaFin, Double metaDistancia, Integer metaDuracion, String deporte) {
-        Reto nuevoReto = new Reto(nombre, fechaInicio, fechaFin, metaDistancia, metaDuracion, deporte);
+    public Reto crearReto(long id, String nombre, String fechaInicio, String fechaFin, float distancia, Integer tiempoObjetivo, String deporte) {
+        Reto nuevoReto = new Reto(id, nombre, fechaInicio, fechaFin, distancia, tiempoObjetivo, deporte);
         retos.add(nuevoReto);
         return nuevoReto;
     }
@@ -44,7 +45,7 @@ public class RetoService {
     public List<Reto> obtenerRetosActivos(String deporte, String fechaInicio, String fechaFin) {
         return retos.stream()
                 .filter(reto -> (deporte == null || reto.getDeporte().equalsIgnoreCase(deporte)) &&
-                        (fechaInicio == null || reto.getFechaInicio().compareTo(fechaInicio) >= 0) &&
+                        (fechaInicio == null || reto.getFechainicio().compareTo(fechaInicio) >= 0) &&
                         (fechaFin == null || reto.getFechaFin().compareTo(fechaFin) <= 0))
                 .limit(5) // Devolver un máximo de 5 retos
                 .collect(Collectors.toList());
@@ -55,18 +56,21 @@ public class RetoService {
      *
      * @param challengeId El ID del reto a aceptar.
      */
-    public String aceptarReto(String challengeId) {
+ // En el servicio
+    public String aceptarReto(String nombre) {
         Optional<Reto> retoOpt = retos.stream()
-                .filter(reto -> reto.getNombre().equalsIgnoreCase(challengeId))
+                .filter(reto -> reto.getNombre().equalsIgnoreCase(nombre))
                 .findFirst();
 
         if (retoOpt.isPresent()) {
-            // Simulación: No hacemos cambios en la entidad, solo validamos el reto encontrado.
-            System.out.println("Reto aceptado: " + retoOpt.get().getNombre());
+            // Lógica de aceptación de reto, puedes actualizar la entidad aquí si es necesario
+            return "Reto aceptado: " + retoOpt.get().getNombre();
         } else {
-            throw new IllegalArgumentException("El reto con ID " + challengeId + " no existe.");
+            throw new IllegalArgumentException("El reto con nombre " + nombre + " no existe.");
         }
     }
+
+   
 
 	public RetoDTO crearReto(RetoDTO retoDTO) {
 		// TODO Auto-generated method stub
@@ -74,6 +78,12 @@ public class RetoService {
 	}
 
 	public RetoDTO obtenerRetoActivo(String nombre) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Reto crearReto(long id, String nombre, String  fechainicio, String fechaFin, double distancia,
+			double tiempoObjetivo, String deporte) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -23,15 +23,7 @@ public class RetoController {
      */
     @PostMapping
     public ResponseEntity<Reto> crearReto(@RequestBody RetoDTO retoDTO) {
-        Reto nuevoReto = retoService.crearReto(
-        		retoDTO.getId(),
-                retoDTO.getNombre(),
-                retoDTO.getFechaInicio(),
-                retoDTO.getFechaFin(),
-                retoDTO.getDistancia(),
-                retoDTO.getTiempoObjetivo(),
-                retoDTO.getDeporte()
-        );
+           Reto nuevoReto = new Reto(retoDTO.getId(), retoDTO.getNombre(), retoDTO.getFechaInicio(), retoDTO.getFechaFin(), retoDTO.getDistancia(), retoDTO.getTiempoObjetivo(), retoDTO.getDeporte());
         return ResponseEntity.status(201).body(nuevoReto);
     }
 

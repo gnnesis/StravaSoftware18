@@ -5,92 +5,99 @@ import java.util.Date;
 public class Reto {
 
     private Long id;
-    private String name;
-    private String startDate;
-    private String endDate;
-    private Float targetDistance;
-    private Integer targetDuration;
-    private String sport;  // "cycling" o "running"
+    private String nombre;
+    private String fechaInicio;
+    private String fechaFin;
+    private Float distancia;
+    private Integer tiempoObjetivo;
+    private String deporte;  // "cycling" o "running"
 
 
-    // Constructor con todos los atributos
-    public Reto(long id, String name, String startDate, String endDate, Float targetDistance, Integer targetDuration, String sport) {
-    	this.id = id;
-        this.name = name;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.targetDistance = targetDistance;
-        this.targetDuration = targetDuration;
-        this.sport = sport;
-    }
+	public Reto(Long id, String nombre, String fechainicio, String fechaFin, Float distancia, Integer tiempoObjetivo, String deporte) {
+            this.id = id;
+            this.nombre = nombre;
+            this.fechaInicio = fechainicio;
+            this.fechaFin = fechaFin;
+            this.distancia = distancia;
+            this.tiempoObjetivo = tiempoObjetivo;
+            this.deporte = deporte;
+        }
 
-    // Getters y Setters
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getStartDate() {
-        return startDate;
-    }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public String getEndDate() {
-        return endDate;
-    }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public Float getTargetDistance() {
-        return targetDistance;
-    }
 
-    public void setTargetDistance(Float targetDistance) {
-        this.targetDistance = targetDistance;
-    }
+	public String getFechainicio() {
+		return fechaInicio;
+	}
 
-    public Integer getTargetDuration() {
-        return targetDuration;
-    }
 
-    public void setTargetDuration(Integer targetDuration) {
-        this.targetDuration = targetDuration;
-    }
+	public void setFechainicio(String fechainicio) {
+		this.fechaInicio = fechainicio;
+	}
 
-    public String getSport() {
-        return sport;
-    }
 
-    public void setSport(String sport) {
-        this.sport = sport;
-    }
+	public String getFechaFin() {
+		return fechaFin;
+	}
 
-    @Override
-    public String toString() {
-        return "Reto{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", targetDistance=" + targetDistance +
-                ", targetDuration=" + targetDuration +
-                ", sport='" + sport + '\'' +
-                '}';
-    }
+
+	public void setFechaFin(String fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
+
+	public Float getDistancia() {
+		return distancia;
+	}
+
+
+	public void setDistancia(Float distancia) {
+		this.distancia = distancia;
+	}
+
+
+	public Integer getTiempoObjetivo() {
+		return tiempoObjetivo;
+	}
+
+
+	public void setTiempoObjetivo(Integer tiempoObjetivo) {
+		this.tiempoObjetivo = tiempoObjetivo;
+	}
+
+
+	public String getDeporte() {
+		return deporte;
+	}
+
+
+	public void setDeporte(String deporte) {
+		this.deporte = deporte;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Reto [id=" + id + ", nombre=" + nombre + ", fechainicio=" + fechaInicio + ", fechaFin=" + fechaFin
+				+ ", distancia=" + distancia + ", tiempoObjetivo=" + tiempoObjetivo + ", deporte=" + deporte + "]";
+	}
+	
 }
