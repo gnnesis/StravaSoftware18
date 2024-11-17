@@ -27,8 +27,8 @@ public class RetoController {
                 retoDTO.getNombre(),
                 retoDTO.getFechaInicio(),
                 retoDTO.getFechaFin(),
-                retoDTO.getMetaDistancia(),
-                retoDTO.getMetaDuracion(),
+                retoDTO.getDistancia(),
+                retoDTO.getTiempoObjetivo(),
                 retoDTO.getDeporte()
         );
         return ResponseEntity.status(201).body(nuevoReto);

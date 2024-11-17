@@ -1,5 +1,6 @@
 package com.strava.service;
 
+import com.strava.dto.RetoDTO;
 import com.strava.entity.Reto;
 import org.springframework.stereotype.Service;
 
@@ -54,7 +55,7 @@ public class RetoService {
      *
      * @param challengeId El ID del reto a aceptar.
      */
-    public void aceptarReto(String challengeId) {
+    public String aceptarReto(String challengeId) {
         Optional<Reto> retoOpt = retos.stream()
                 .filter(reto -> reto.getNombre().equalsIgnoreCase(challengeId))
                 .findFirst();
@@ -66,4 +67,14 @@ public class RetoService {
             throw new IllegalArgumentException("El reto con ID " + challengeId + " no existe.");
         }
     }
+
+	public RetoDTO crearReto(RetoDTO retoDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public RetoDTO obtenerRetoActivo(String nombre) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

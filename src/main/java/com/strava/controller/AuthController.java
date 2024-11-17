@@ -18,7 +18,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<Usuario> registrarUsuario(@Validated @RequestBody UsuarioDTO usuarioDTO) {
-        Usuario usuario = usuarioService.registrarUsuario(usuarioDTO.getEmail(), usuarioDTO.getNombre(), "google");
+        Usuario usuario = usuarioService.registrarUsuario(usuarioDTO.getEmail(), usuarioDTO.getNombre(), "google", null, null, null, null);
         return ResponseEntity.ok(usuario);
     }
 }

@@ -1,5 +1,6 @@
 package com.strava.service;
 
+import com.strava.dto.UsuarioDTO;
 import com.strava.entity.Usuario;
 import org.springframework.stereotype.Service;
 
@@ -96,4 +97,19 @@ public class UsuarioService {
         Usuario usuario = obtenerUsuarioPorEmail(email);
         usuarios.remove(usuario);
     }
+
+	public UsuarioDTO registrarUsuario(UsuarioDTO usuarioDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String iniciarSesion(String email, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void cerrarSesion(String token) {
+		// TODO Auto-generated method stub
+		
+	}
 }

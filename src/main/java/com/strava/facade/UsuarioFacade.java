@@ -3,7 +3,7 @@ package com.strava.facade;
 
 import org.springframework.stereotype.Component;
 
-import com.ejemplo.service.UsuarioService;
+import com.strava.service.UsuarioService;
 import com.strava.dto.UsuarioDTO;
 
 @Component
