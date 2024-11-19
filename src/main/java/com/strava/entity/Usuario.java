@@ -5,13 +5,13 @@ public class Usuario {
     private String nombre;
     private String fechaNacimiento; //"YYYY-MM-DD"
     private Double peso; 
-    private Integer altura; 
+    private Double altura; 
     private Integer frecuenciaMaxima;
     private Integer frecuenciaReposo;
     private String password;
     private TipoAutentication tipoAutentication ;
 
-    public Usuario(String email, String nombre, String fechaNacimiento, Double peso, Integer altura, Integer frecuenciaMaxima, Integer frecuenciaReposo, String password, TipoAutentication tipoAutentication2) {
+    public Usuario(String email, String nombre, String fechaNacimiento, Double peso, Double altura, Integer frecuenciaMaxima, Integer frecuenciaReposo, String password, TipoAutentication tipoAutentication2) {
         this.email = email;
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
@@ -59,11 +59,11 @@ public class Usuario {
         this.peso = peso;
     }
 
-    public Integer getAltura() {
+    public double getAltura() {
         return altura;
     }
 
-    public void setAltura(Integer altura) {
+    public void setAltura(double altura) {
         this.altura = altura;
     }
 

@@ -16,7 +16,7 @@ public class UsuarioService {
     private final List<String> blacklistTokens = new ArrayList<>();
 
     public Usuario registrarUsuario(String email, String nombre, String fechaNacimiento,
-                                    Double peso, Integer altura, Integer frecuenciaMaxima,
+                                    Double peso, Double altura, Integer frecuenciaMaxima,
                                     Integer frecuenciaReposo, String password, TipoAutentication tipoAutentication) {
 
         Optional<Usuario> existente = usuarios.stream()

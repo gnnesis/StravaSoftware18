@@ -8,7 +8,7 @@ public class UsuarioDTO {
     private String nombre;
     private String fechaNacimiento;
     private double peso;
-    private int altura;
+    private double altura;
     private int frecuenciaCardiacaMaxima;
     private int frecuenciaCardiacaReposo;
     private String password;
@@ -66,11 +66,11 @@ public class UsuarioDTO {
         this.peso = peso;
     }
 
-    public int getAltura() {
+    public double getAltura() {
         return altura;
     }
 
-    public void setAltura(int altura) {
+    public void setAltura(double altura) {
         this.altura = altura;
     }
 
