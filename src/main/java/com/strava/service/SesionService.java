@@ -1,6 +1,8 @@
 package com.strava.service;
 
 import com.strava.entity.Sesion;
+import com.strava.entity.Usuario;
+
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,11 +23,19 @@ public class SesionService {
      * @param distancia    Distancia recorrida en kilómetros.
      * @param fechaInicio  Fecha de inicio de la sesión (formato: "YYYY-MM-DD").
      * @param horaInicio   Hora de inicio de la sesión (formato: "HH:mm:ss").
+     * @param usuario 
      * @param d     Duración de la sesión en minutos.
      * @return La sesión creada.
      */
-    public Sesion crearSesion(String titulo, String deporte, double distancia, String fechaInicio, String horaInicio, double duracion) {
-        Sesion nuevaSesion = new Sesion(deporte, titulo, horaInicio, distancia, fechaInicio, horaInicio, duracion);
+    public Sesion crearSesion(String titulo, String deporte, double distancia, String fechaInicio, String horaInicio, double duracion, Usuario usuario) {
+    	
+    	
+    	//Comprobamos si el deporte o es cycling o running
+    	 if (!deporte.equals("cycling") && !deporte.equals("running")) {
+             throw new IllegalArgumentException("Deporte no válido");
+         }
+
+    	Sesion nuevaSesion = new Sesion(deporte, titulo, horaInicio, distancia, fechaInicio, horaInicio, duracion, usuario);
         sesiones.add(nuevaSesion);
         return nuevaSesion;
     }

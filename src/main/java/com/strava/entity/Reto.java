@@ -1,9 +1,16 @@
 package com.strava.entity;
 
-import java.util.Date;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 public class Reto {
 
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
     private String fechaInicio;
@@ -11,9 +18,17 @@ public class Reto {
     private Float distancia;
     private Integer tiempoObjetivo;
     private String deporte;  // "cycling" o "running"
-
-
-	public Reto(Long id, String nombre, String fechainicio, String fechaFin, Float distancia, Integer tiempoObjetivo, String deporte) {
+    private String email;  // Email del usuario que creó el reto para el token
+    
+    
+    /**
+     * cada reto tiene un usuario creador
+     */
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+    
+	public Reto(Long id, String nombre, String fechainicio, String fechaFin, Float distancia, Integer tiempoObjetivo, String deporte, String email) {
             this.id = id;
             this.nombre = nombre;
             this.fechaInicio = fechainicio;
@@ -21,6 +36,8 @@ public class Reto {
             this.distancia = distancia;
             this.tiempoObjetivo = tiempoObjetivo;
             this.deporte = deporte;
+            this.email = email;
+            
         }
 
 
@@ -92,12 +109,20 @@ public class Reto {
 	public void setDeporte(String deporte) {
 		this.deporte = deporte;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 
 	@Override
 	public String toString() {
 		return "Reto [id=" + id + ", nombre=" + nombre + ", fechainicio=" + fechaInicio + ", fechaFin=" + fechaFin
-				+ ", distancia=" + distancia + ", tiempoObjetivo=" + tiempoObjetivo + ", deporte=" + deporte + "]";
+				+ ", distancia=" + distancia + ", tiempoObjetivo=" + tiempoObjetivo + ", deporte=" + deporte + ", email="+ email +"]";
 	}
 	
 }

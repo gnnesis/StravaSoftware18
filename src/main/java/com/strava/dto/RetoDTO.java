@@ -11,13 +11,14 @@ public class RetoDTO {
     private Float distancia;
     private Integer tiempoObjetivo;
     private String deporte;
+    private String email;
     
     public RetoDTO() {
     	
     }
     
 	public RetoDTO(long id, String nombre, String fechaInicio, String fechaFin, Float distancia, Integer tiempoObjetivo,
-			String deporte) {
+			String deporte,  String email) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -26,6 +27,7 @@ public class RetoDTO {
 		this.distancia = distancia;
 		this.tiempoObjetivo = tiempoObjetivo;
 		this.deporte = deporte;
+		this.email = email;
 	}
 	
 	public long getId() {
@@ -69,6 +71,13 @@ public class RetoDTO {
 	}
 	public void setDeporte(String deporte) {
 		this.deporte = deporte;
+	}
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
     
 	

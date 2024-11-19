@@ -1,5 +1,7 @@
 package com.strava.dto;
 
+import com.strava.entity.TipoAutentication;
+
 public class UsuarioDTO {
 
     private String email;
@@ -10,13 +12,15 @@ public class UsuarioDTO {
     private int frecuenciaCardiacaMaxima;
     private int frecuenciaCardiacaReposo;
     private String password;
+    private TipoAutentication tipoAutentication;
 
 	public UsuarioDTO() {
 	}
 	
  
     public UsuarioDTO(String email, String nombre, String fechaNacimiento, double peso, int altura, 
-                      int frecuenciaCardiacaMaxima, int frecuenciaCardiacaReposo, String password) {
+                      int frecuenciaCardiacaMaxima, int frecuenciaCardiacaReposo, String password,
+                      TipoAutentication tipoAutentication) {
         this.email = email;
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
@@ -25,6 +29,7 @@ public class UsuarioDTO {
         this.frecuenciaCardiacaMaxima = frecuenciaCardiacaMaxima;
         this.frecuenciaCardiacaReposo = frecuenciaCardiacaReposo;
         this.password = password;
+        this.tipoAutentication = tipoAutentication;
     }
 
 
@@ -91,5 +96,13 @@ public class UsuarioDTO {
 	
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public TipoAutentication getTipoAutentication() {
+		return tipoAutentication;
+	}
+	
+	public void setTipoAutentication(TipoAutentication tipoAutentication) {
+		this.tipoAutentication = tipoAutentication;
 	}
 }

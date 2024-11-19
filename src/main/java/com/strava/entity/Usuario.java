@@ -9,8 +9,9 @@ public class Usuario {
     private Integer frecuenciaMaxima;
     private Integer frecuenciaReposo;
     private String password;
+    private TipoAutentication tipoAutentication ;
 
-    public Usuario(String email, String nombre, String fechaNacimiento, Double peso, Integer altura, Integer frecuenciaMaxima, Integer frecuenciaReposo, String password) {
+    public Usuario(String email, String nombre, String fechaNacimiento, Double peso, Integer altura, Integer frecuenciaMaxima, Integer frecuenciaReposo, String password, TipoAutentication tipoAutentication2) {
         this.email = email;
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
@@ -21,8 +22,8 @@ public class Usuario {
         this.password = password;
     }
 
-    public Usuario(String email, String nombre, String fechaNacimiento, String password) {
-        this(email, nombre, fechaNacimiento, null, null, null, null, password);
+    public Usuario(String email, String nombre, String fechaNacimiento, String password, TipoAutentication tipoAutentication) {
+        this(email, nombre, fechaNacimiento, null, null, null, null, password, tipoAutentication);
     }
 
 
@@ -89,18 +90,21 @@ public class Usuario {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "email='" + email + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", fechaNacimiento='" + fechaNacimiento + '\'' +
-                ", peso=" + peso +
-                ", altura=" + altura +
-                ", frecuenciaMaxima=" + frecuenciaMaxima +
-                ", frecuenciaReposo=" + frecuenciaReposo +
-                ", password=" + password +
-                '}';
+	
+	public TipoAutentication getTipoAutenticacion() {
+        return tipoAutentication;
     }
+
+    public void setTipoAutenticacion(TipoAutentication tipoAutenticacion) {
+        this.tipoAutentication = tipoAutenticacion;
+    }
+
+	@Override
+	public String toString() {
+		return "Usuario [email=" + email + ", nombre=" + nombre + ", fechaNacimiento=" + fechaNacimiento + ", peso="
+				+ peso + ", altura=" + altura + ", frecuenciaMaxima=" + frecuenciaMaxima + ", frecuenciaReposo="
+				+ frecuenciaReposo + ", password=" + password + ", tipoAutentication=" + tipoAutentication + "]";
+	}
+
+    
 }
