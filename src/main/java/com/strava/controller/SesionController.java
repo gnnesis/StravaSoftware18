@@ -41,7 +41,7 @@ public class SesionController {
         String token = request.getHeader("Authorization");
 
         if (token == null) {
-            return ResponseEntity.status(401).body(null); // Token no proporcionado
+            return ResponseEntity.status(401).body(null); 
         }
 
         try {
