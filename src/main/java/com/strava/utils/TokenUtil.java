@@ -5,15 +5,14 @@ import java.util.Base64;
 
 public class TokenUtil {
 
-    private static final long EXPIRATION_TIME = 3600000; // 1 hora en milisegundos
-    private static final String CLAVE = "mi_clave_secreta";  // Una clave secreta, puede ser cualquier cadena
+    private static final long EXPIRATION_TIME = 3600000; //1 hr
+    private static final String CLAVE = "mi_clave_secreta";  
 
-    // Método para generar un token
+    //IA Generativa ChatGPT
     public static String generarToken(String email) {
         long expirationTime = System.currentTimeMillis() + EXPIRATION_TIME;
-        String token = email + ":" + expirationTime;  // El token es el email y la fecha de expiración concatenados
+        String token = email + ":" + expirationTime; 
 
-        // Cifrar el token usando Base64 y la clave secreta
         String encodedToken = Base64.getEncoder().encodeToString(token.getBytes(StandardCharsets.UTF_8)) + "." + CLAVE;
         return encodedToken;
     }

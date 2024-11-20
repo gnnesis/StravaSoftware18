@@ -29,8 +29,6 @@ public class SesionService {
      */
     public Sesion crearSesion(String titulo, String deporte, double distancia, String fechaInicio, String horaInicio, double duracion, Usuario usuario) {
     	
-    	
-    	//Comprobamos si el deporte o es cycling o running
     	 if (!deporte.equals("cycling") && !deporte.equals("running")) {
              throw new IllegalArgumentException("Deporte no válido");
          }
@@ -41,7 +39,7 @@ public class SesionService {
     }
 
     /**
-     * Obtiene las últimas 5 sesiones del usuario con filtros opcionales por rango de fechas.
+     * Obtiene las últimas 5 sesiones del usuario con filtros opcionales por fechas.
      *
      * @param fechaInicio Filtro opcional: fecha de inicio (formato: "YYYY-MM-DD").
      * @param fechaFin    Filtro opcional: fecha de fin (formato: "YYYY-MM-DD").
