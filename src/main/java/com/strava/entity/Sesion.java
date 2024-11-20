@@ -8,7 +8,7 @@ public class Sesion {
     private String titulo;
     private String deporte; //"cycling" o "running"
     private double distancia;
-    private String fechaInicio; //"YYYY-MM-DD"
+    private String fechaInicio; //"AAAA-MM-DD"
     private String horaInicio; //"HH:mm"
     private double duracion; 
  

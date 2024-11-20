@@ -1,6 +1,8 @@
 package com.strava.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +39,7 @@ public class SesionController {
      */
     @PostMapping("/crearSesion")
     public ResponseEntity<Sesion> crearSesion(@RequestBody SesionDTO sesionDTO, HttpServletRequest request) {
-        // Obtener el token del encabezado Authorization
+        
         String token = request.getHeader("Authorization");
 
         if (token == null) {
@@ -45,21 +47,21 @@ public class SesionController {
         }
 
         try {
-            // Validar el token y obtener el email del usuario
-            String email = TokenUtil.validarToken(token); // Esto devolverá el email del usuario
+            
+            String email = TokenUtil.validarToken(token);
 
-            // Buscar al usuario por su email
+            
             Usuario usuario = usuarioService.obtenerUsuarioPorEmail(email);
             if (usuario == null) {
-                return ResponseEntity.status(404).body(null); // Usuario no encontrado
+                return ResponseEntity.status(404).body(null);
             }
 
-            // Verificar que el deporte sea válido
+            //Se verifica que el deporte sea cycling o running
             if (!sesionDTO.getDeporte().equals("cycling") && !sesionDTO.getDeporte().equals("running")) {
-                return ResponseEntity.status(400).body(null); // Deporte inválido
+                return ResponseEntity.status(400).body(null); 
             }
 
-            // Crear la sesión y asociarla al usuario
+            
             Sesion nuevaSesion = sesionService.crearSesion(
                     sesionDTO.getTitulo(),
                     sesionDTO.getDeporte(),
@@ -67,41 +69,46 @@ public class SesionController {
                     sesionDTO.getFechaInicio(),
                     sesionDTO.gethoraInicio(),
                     sesionDTO.getDuracion(),
-                    usuario // Asociamos la sesión al usuario
+                    usuario 
             );
 
-            return ResponseEntity.status(201).body(nuevaSesion); // Retorna la sesión creada
+            return ResponseEntity.status(201).body(nuevaSesion); 
 
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(401).body(null); // Token inválido o expirado
+            return ResponseEntity.status(401).body(null);
         }
     }
 
-    // Otros métodos como obtener sesiones, etc.
     
     @GetMapping("/obtenerSesiones")
-    public ResponseEntity<List<Sesion>> obtenerSesiones(
+    public ResponseEntity<Map<String, Object>> obtenerSesiones(
             @RequestParam(required = false) String fechaInicio,
             @RequestParam(required = false) String fechaFin,
             HttpServletRequest request) {
 
-        // Obtener el token de la solicitud
+        
         String token = request.getHeader("Authorization");
 
         if (token == null) {
-            return ResponseEntity.status(401).body(null); // Si no hay token, devolver error 401
+            return ResponseEntity.status(401).body(null); 
         }
-
         try {
-            // Validar el token y obtener el email del usuario
+            
             String email = TokenUtil.validarToken(token);
-            Usuario usuario = usuarioService.obtenerUsuarioPorEmail(email); // Obtener usuario por email
+            Usuario usuario = usuarioService.obtenerUsuarioPorEmail(email); 
 
-            // Filtrar las sesiones según las fechas (si se proporcionan)
+            
             List<Sesion> sesiones = sesionService.obtenerSesiones(fechaInicio, fechaFin);
-            return ResponseEntity.ok(sesiones);
+
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("email", usuario.getEmail());
+            response.put("sesiones", sesiones);
+
+            
+            return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(401).body(null); // Si el token es inválido
+            return ResponseEntity.status(401).body(null); 
         }
-    }
+      }
 }

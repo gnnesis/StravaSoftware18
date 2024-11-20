@@ -3,7 +3,6 @@ package com.strava.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,6 +52,7 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody UsuarioDTO usuarioDTO) {
         Usuario usuario = usuarioService.autenticarUsuario(usuarioDTO.getEmail(), usuarioDTO.getPassword());
 
+        //si no hay usuario
         if (usuario == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
         }
@@ -62,22 +62,6 @@ public class AuthController {
         return ResponseEntity.ok("Token: " + token);
     }
 
-//    @GetMapping("/perfil")
-//    public ResponseEntity<?> obtenerPerfil(HttpServletRequest request) {
-//        String token = request.getHeader("Authorization");
-//
-//        if (token == null) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no proporcionado");
-//        }
-//
-//        try {
-//            String email = TokenUtil.validarToken(token); // Decodificar el token y obtener el email
-//            Usuario usuario = usuarioService.obtenerUsuarioPorEmail(email);
-//            return ResponseEntity.ok(usuario);
-//        } catch (IllegalArgumentException e) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-//        }
-//    }
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request) {

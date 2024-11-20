@@ -1,6 +1,6 @@
 package com.strava.dto;
 
-import java.time.LocalDate;
+
 
 public class RetoDTO {
 

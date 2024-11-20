@@ -1,6 +1,6 @@
 package com.strava.dto;
 
-import java.time.LocalDateTime;
+
 
 public class SesionDTO {
 

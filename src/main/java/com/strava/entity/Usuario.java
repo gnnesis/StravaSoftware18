@@ -3,7 +3,7 @@ package com.strava.entity;
 public class Usuario {
     private String email;
     private String nombre;
-    private String fechaNacimiento; //"YYYY-MM-DD"
+    private String fechaNacimiento; 
     private Double peso; 
     private Double altura; 
     private Integer frecuenciaMaxima;
