@@ -23,8 +23,8 @@ public class SesionService {
      * @param distancia    Distancia recorrida en kilómetros.
      * @param fechaInicio  Fecha de inicio de la sesión (formato: "YYYY-MM-DD").
      * @param horaInicio   Hora de inicio de la sesión (formato: "HH:mm:ss").
-     * @param usuario 
-     * @param d     Duración de la sesión en minutos.
+     * @param duracion     Duración de la sesión en minutos.
+     * @param usuario      Usuario que realizó la sesión.
      * @return La sesión creada.
      */
     public Sesion crearSesion(String titulo, String deporte, double distancia, String fechaInicio, String horaInicio, double duracion, Usuario usuario) {
@@ -33,7 +33,7 @@ public class SesionService {
              throw new IllegalArgumentException("Deporte no válido");
          }
 
-    	Sesion nuevaSesion = new Sesion(deporte, titulo, horaInicio, distancia, fechaInicio, horaInicio, duracion, usuario);
+    	Sesion nuevaSesion = new Sesion(titulo, deporte, distancia, fechaInicio, horaInicio, duracion, usuario);
         sesiones.add(nuevaSesion);
         return nuevaSesion;
     }
