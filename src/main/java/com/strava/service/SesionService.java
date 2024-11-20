@@ -33,7 +33,7 @@ public class SesionService {
              throw new IllegalArgumentException("Deporte no válido");
          }
 
-    	Sesion nuevaSesion = new Sesion(titulo, deporte, distancia, fechaInicio, horaInicio, duracion, usuario);
+    	Sesion nuevaSesion = new Sesion(titulo, deporte, horaInicio, distancia, fechaInicio, horaInicio, duracion, usuario);
         sesiones.add(nuevaSesion);
         return nuevaSesion;
     }
