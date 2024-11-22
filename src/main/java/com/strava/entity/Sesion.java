@@ -8,7 +8,7 @@ public class Sesion {
     private String titulo;
     private String deporte; //"cycling" o "running"
     private double distancia;
-    private String fechaInicio; //"AAAA-MM-DD"
+    private Date fechaInicio; //"AAAA-MM-DD"
     private String horaInicio; //"HH:mm"
     private double duracion; 
  
@@ -16,7 +16,7 @@ public class Sesion {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
     
-    public Sesion(String id, String titulo, String deporte, double distancia, String fechaInicio, String horaInicio, double duracion,
+    public Sesion(String id, String titulo, String deporte, double distancia, Date fechaInicio, String horaInicio, double duracion,
     		Usuario usuario) {
         this.id = id;
         this.titulo = titulo;
@@ -62,11 +62,11 @@ public class Sesion {
     }
     
 
-    public String getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(String fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 

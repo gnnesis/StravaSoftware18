@@ -3,7 +3,7 @@ package com.strava.entity;
 public class Usuario {
     private String email;
     private String nombre;
-    private String fechaNacimiento; 
+    private Date fechaNacimiento; 
     private Double peso; 
     private Double altura; 
     private Integer frecuenciaMaxima;
@@ -11,7 +11,7 @@ public class Usuario {
     private String password;
     private TipoAutentication tipoAutentication ;
 
-    public Usuario(String email, String nombre, String fechaNacimiento, Double peso, Double altura, Integer frecuenciaMaxima, Integer frecuenciaReposo, String password, TipoAutentication tipoAutentication2) {
+    public Usuario(String email, String nombre, Date fechaNacimiento, Double peso, Double altura, Integer frecuenciaMaxima, Integer frecuenciaReposo, String password, TipoAutentication tipoAutentication2) {
         this.email = email;
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
@@ -22,7 +22,7 @@ public class Usuario {
         this.password = password;
     }
 
-    public Usuario(String email, String nombre, String fechaNacimiento, String password, TipoAutentication tipoAutentication) {
+    public Usuario(String email, String nombre, Date fechaNacimiento, String password, TipoAutentication tipoAutentication) {
         this(email, nombre, fechaNacimiento, null, null, null, null, password, tipoAutentication);
     }
 
@@ -43,11 +43,11 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

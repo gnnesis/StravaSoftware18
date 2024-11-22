@@ -13,8 +13,8 @@ public class Reto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private String fechaInicio;
-    private String fechaFin;
+    private Date fechaInicio;
+    private Date fechaFin;
     private Float distancia;
     private Integer tiempoObjetivo;
     private String deporte;  // "cycling" o "running"
@@ -28,7 +28,7 @@ public class Reto {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
     
-	public Reto(Long id, String nombre, String fechainicio, String fechaFin, Float distancia, Integer tiempoObjetivo, String deporte, String email) {
+	public Reto(Long id, String nombre, Date fechainicio, Date fechaFin, Float distancia, Integer tiempoObjetivo, String deporte, String email) {
             this.id = id;
             this.nombre = nombre;
             this.fechaInicio = fechainicio;
@@ -61,22 +61,22 @@ public class Reto {
 	}
 
 
-	public String getFechainicio() {
+	public Date getFechainicio() {
 		return fechaInicio;
 	}
 
 
-	public void setFechainicio(String fechainicio) {
+	public void setFechainicio(Date fechainicio) {
 		this.fechaInicio = fechainicio;
 	}
 
 
-	public String getFechaFin() {
+	public Date getFechaFin() {
 		return fechaFin;
 	}
 
 
-	public void setFechaFin(String fechaFin) {
+	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 
