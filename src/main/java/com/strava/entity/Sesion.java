@@ -1,5 +1,7 @@
 package com.strava.entity;
 
+import java.sql.Date;
+
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 

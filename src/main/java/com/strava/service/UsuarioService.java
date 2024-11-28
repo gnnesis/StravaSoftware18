@@ -1,5 +1,6 @@
 package com.strava.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +16,7 @@ public class UsuarioService {
     private final List<Usuario> usuarios = new ArrayList<>();
     private final List<String> blacklistTokens = new ArrayList<>();
 
-    public Usuario registrarUsuario(String email, String nombre, String fechaNacimiento,
+    public Usuario registrarUsuario(String email, String nombre, Date fechaNacimiento,
                                     Double peso, Double altura, Integer frecuenciaMaxima,
                                     Integer frecuenciaReposo, String password, TipoAutentication tipoAutentication) {
 

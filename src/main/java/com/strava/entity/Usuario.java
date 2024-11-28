@@ -1,5 +1,7 @@
 package com.strava.entity;
 
+import java.sql.Date;
+
 public class Usuario {
     private String email;
     private String nombre;

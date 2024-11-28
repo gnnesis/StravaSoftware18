@@ -1,13 +1,13 @@
 package com.strava.dto;
 
-
+import java.sql.Date;
 
 public class RetoDTO {
 
 	private long id;
     private String nombre; 
-    private String fechaInicio;
-    private String fechaFin;
+    private Date fechaInicio;
+    private Date fechaFin;
     private Float distancia;
     private Integer tiempoObjetivo;
     private String deporte;
@@ -17,7 +17,7 @@ public class RetoDTO {
     	
     }
     
-	public RetoDTO(long id, String nombre, String fechaInicio, String fechaFin, Float distancia, Integer tiempoObjetivo,
+	public RetoDTO(long id, String nombre, Date fechaInicio, Date fechaFin, Float distancia, Integer tiempoObjetivo,
 			String deporte,  String email) {
 		super();
 		this.id = id;
@@ -42,16 +42,16 @@ public class RetoDTO {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getFechaInicio() {
+	public Date getFechaInicio() {
 		return fechaInicio;
 	}
-	public void setFechaInicio(String fechaInicio) {
+	public void setFechaInicio(Date fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
-	public String getFechaFin() {
+	public Date getFechaFin() {
 		return fechaFin;
 	}
-	public void setFechaFin(String fechaFin) {
+	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 	public Float getDistancia() {

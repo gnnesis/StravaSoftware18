@@ -32,8 +32,8 @@ public class RetoService {
         return retos.stream()
                 .filter(reto -> reto.getEmail().equals(email))  
                 .filter(reto -> (deporte == null || reto.getDeporte().equalsIgnoreCase(deporte)) &&
-                        (fechaInicio == null || LocalDate.parse(reto.getFechainicio()).compareTo(fechaInicio) >= 0) &&
-                        (fechaFin == null || LocalDate.parse(reto.getFechaFin()).compareTo(fechaFin) <= 0))
+                        (fechaInicio == null || LocalDate.parse((CharSequence) reto.getFechainicio()).compareTo(fechaInicio) >= 0) &&
+                        (fechaFin == null || LocalDate.parse((CharSequence) reto.getFechaFin()).compareTo(fechaFin) <= 0))
                 .collect(Collectors.toList());
     }
 

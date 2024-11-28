@@ -5,6 +5,7 @@ import com.strava.entity.Usuario;
 
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +28,7 @@ public class SesionService {
      * @param usuario      Usuario que realizó la sesión.
      * @return La sesión creada.
      */
-    public Sesion crearSesion(String titulo, String deporte, double distancia, String fechaInicio, String horaInicio, double duracion, Usuario usuario) {
+    public Sesion crearSesion(String titulo, String deporte, double distancia, Date fechaInicio, String horaInicio, double duracion, Usuario usuario) {
     	
     	 if (!deporte.equals("cycling") && !deporte.equals("running")) {
              throw new IllegalArgumentException("Deporte no válido");
@@ -45,7 +46,7 @@ public class SesionService {
      * @param fechaFin    Filtro opcional: fecha de fin (formato: "YYYY-MM-DD").
      * @return Lista de sesiones filtradas (máximo 5 sesiones).
      */
-    public List<Sesion> obtenerSesiones(String fechaInicio, String fechaFin) {
+    public List<Sesion> obtenerSesiones(Date fechaInicio, Date fechaFin) {
         return sesiones.stream()
                 .filter(sesion -> (fechaInicio == null || sesion.getFechaInicio().compareTo(fechaInicio) >= 0) &&
                         (fechaFin == null || sesion.getFechaInicio().compareTo(fechaFin) <= 0))

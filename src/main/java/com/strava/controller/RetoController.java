@@ -36,7 +36,7 @@ public class RetoController {
         Reto retoCreado = retoService.crearReto(nuevoReto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(retoCreado);
     }
-
+    
     // Obtener los retos activos (últimos 5 o filtrados por fecha o deporte)
     @GetMapping("/active")
     public ResponseEntity<List<Reto>> obtenerRetosActivos(
