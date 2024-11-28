@@ -1,5 +1,8 @@
 package com.strava.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +53,6 @@ public class SesionController {
             
             String email = TokenUtil.validarToken(token);
 
-            
             Usuario usuario = usuarioService.obtenerUsuarioPorEmail(email);
             if (usuario == null) {
                 return ResponseEntity.status(404).body(null);
@@ -61,7 +63,6 @@ public class SesionController {
                 return ResponseEntity.status(400).body(null); 
             }
 
-            
             Sesion nuevaSesion = sesionService.crearSesion(
                     sesionDTO.getTitulo(),
                     sesionDTO.getDeporte(),
@@ -86,7 +87,6 @@ public class SesionController {
             @RequestParam(required = false) String fechaFin,
             HttpServletRequest request) {
 
-        
         String token = request.getHeader("Authorization");
 
         if (token == null) {
@@ -97,18 +97,24 @@ public class SesionController {
             String email = TokenUtil.validarToken(token);
             Usuario usuario = usuarioService.obtenerUsuarioPorEmail(email); 
 
+            // Convertir los parámetros String a Date
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // O el formato que estés utilizando
             
-            List<Sesion> sesiones = sesionService.obtenerSesiones(fechaInicio, fechaFin);
+            Date fechaInicioDate = sdf.parse(fechaInicio);  // Convertir fechaInicio de String a Date
+            Date fechaFinDate = sdf.parse(fechaFin);  // Convertir fechaFin de String a Date
 
-            
+            // Llamar al servicio con las fechas de tipo Date
+            List<Sesion> sesiones = sesionService.obtenerSesiones(fechaInicioDate, fechaFinDate);
+
             Map<String, Object> response = new HashMap<>();
             response.put("email", usuario.getEmail());
             response.put("sesiones", sesiones);
 
-            
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(401).body(null); 
+        } catch (ParseException e) {
+            return ResponseEntity.status(400).body(null); // En caso de que las fechas no puedan ser parseadas
         }
-      }
+    }
 }

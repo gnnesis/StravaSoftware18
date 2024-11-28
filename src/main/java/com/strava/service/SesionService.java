@@ -42,14 +42,14 @@ public class SesionService {
     /**
      * Obtiene las últimas 5 sesiones del usuario con filtros opcionales por fechas.
      *
-     * @param fechaInicio Filtro opcional: fecha de inicio (formato: "YYYY-MM-DD").
-     * @param fechaFin    Filtro opcional: fecha de fin (formato: "YYYY-MM-DD").
+     * @param fechaInicioDate Filtro opcional: fecha de inicio (formato: "YYYY-MM-DD").
+     * @param fechaFinDate    Filtro opcional: fecha de fin (formato: "YYYY-MM-DD").
      * @return Lista de sesiones filtradas (máximo 5 sesiones).
      */
-    public List<Sesion> obtenerSesiones(Date fechaInicio, Date fechaFin) {
+    public List<Sesion> obtenerSesiones(java.util.Date fechaInicioDate, java.util.Date fechaFinDate) {
         return sesiones.stream()
-                .filter(sesion -> (fechaInicio == null || sesion.getFechaInicio().compareTo(fechaInicio) >= 0) &&
-                        (fechaFin == null || sesion.getFechaInicio().compareTo(fechaFin) <= 0))
+                .filter(sesion -> (fechaInicioDate == null || sesion.getFechaInicio().compareTo(fechaInicioDate) >= 0) &&
+                        (fechaFinDate == null || sesion.getFechaInicio().compareTo(fechaFinDate) <= 0))
                 .limit(5) // Máximo 5 sesiones
                 .collect(Collectors.toList());
     }

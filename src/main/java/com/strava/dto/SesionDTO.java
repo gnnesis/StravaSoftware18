@@ -1,20 +1,20 @@
 package com.strava.dto;
 
-
+import java.sql.Date;
 
 public class SesionDTO {
 
     private String titulo;
     private String deporte;
     private double distancia;
-    private String fechaInicio;
+    private Date fechaInicio;
     private String horaInicio;
     private double duracion;
 
   
     public SesionDTO() {}
 
-    public SesionDTO(String titulo, String deporte, double distancia, String fechaInicio, String horaInicio,double duracion) {
+    public SesionDTO(String titulo, String deporte, double distancia, Date fechaInicio, String horaInicio,double duracion) {
         this.titulo = titulo;
         this.deporte = deporte;
         this.distancia = distancia;
@@ -48,11 +48,11 @@ public class SesionDTO {
         this.distancia = distancia;
     }
 
-    public String getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(String fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 

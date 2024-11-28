@@ -1,12 +1,14 @@
 package com.strava.dto;
 
+import java.sql.Date;
+
 import com.strava.entity.TipoAutentication;
 
 public class UsuarioDTO {
 
     private String email;
     private String nombre;
-    private String fechaNacimiento;
+    private Date fechaNacimiento;
     private double peso;
     private double altura;
     private int frecuenciaCardiacaMaxima;
@@ -18,7 +20,7 @@ public class UsuarioDTO {
 	}
 	
  
-    public UsuarioDTO(String email, String nombre, String fechaNacimiento, double peso, int altura, 
+    public UsuarioDTO(String email, String nombre, Date fechaNacimiento, double peso, int altura, 
                       int frecuenciaCardiacaMaxima, int frecuenciaCardiacaReposo, String password,
                       TipoAutentication tipoAutentication) {
         this.email = email;
@@ -50,11 +52,11 @@ public class UsuarioDTO {
         this.nombre = nombre;
     }
 
-    public String getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
