@@ -7,8 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import com.strava.entity.Usuario;
 
-@EnableJpaRepositories
-public interface UserRepository extends JpaRepository<Usuario, String> {
+@Repository
+public interface UserRepository extends JpaRepository<Usuario, String>{
+
+	Usuario findByEmailAndPassword(String email, String password);
+	
 	
 }
 

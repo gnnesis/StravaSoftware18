@@ -18,27 +18,14 @@ repositories {
 }
 
 dependencies {
-    // Core de Spring Boot
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web-services'
-
-    // OpenAPI/Swagger para Spring Boot 3.x (solo esta dependencia)
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
-
-    // Jakarta Servlet API (compatible con Spring Boot 3.x)
-    providedRuntime 'jakarta.servlet:jakarta.servlet-api:6.0.0'
-
-    // Herramientas de desarrollo
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
-    // Base de datos H2
-    runtimeOnly 'com.h2database:h2'
-
-    // Dependencias para testing
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web-services'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
+	
 }
-
 
 tasks.named('test') {
 	useJUnitPlatform()
@@ -47,9 +34,10 @@ tasks.named('test') {
 
 
 
-
 tasks.named('test') {
 	useJUnitPlatform()
 }
 
-
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-parameters"
+}

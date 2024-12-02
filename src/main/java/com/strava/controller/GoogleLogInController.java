@@ -28,10 +28,12 @@ public class GoogleLogInController {
     public ResponseEntity<Boolean> validateCredentials(@RequestParam String email, @RequestParam String password) {
         return ResponseEntity.ok(googleLoginService.validateCredentials(email, password));
     }
-
+    
+    
+    //ARREGLAR
     @PostMapping("/register")
     public ResponseEntity<Void> register(@RequestParam String email, @RequestParam String password) {
-        googleLoginService.register(email, password);
+        googleLoginService.register(email, password, null, null, null, null, null, null, password);
         return ResponseEntity.ok().build();
     }
 }

@@ -1,61 +1,36 @@
 package com.strava.service;
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.Date;
 
 import org.springframework.stereotype.Service;
 
+import com.strava.entity.TipoAutentication;
 import com.strava.entity.Usuario;
+import com.strava.repository.UserRepository;
 
-@Service
-public class GoogleLoginService {
-/*CON BASE DE DATOS PERO NO FUNCIONA*/
-//    private final UserRepository userRepository;
-//
-//    public GoogleLoginService(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
-//
-//    public boolean isEmailRegistered(String email) {
-//        return userRepository.findById(email).isPresent();
-//    }
-//
-//    public boolean validateCredentials(String email, String password) {
-//        Optional<Usuario> user = userRepository.findById(email);
-//        return user.isPresent() && user.get().getPassword().equals(password);
-//    }
-//
-//    public void register(String email, String password) {
-//        if (!isEmailRegistered(email)) {
-//            userRepository.save(new Usuario(email, password, null, null, null, null, null, password, null));
-//        }
-//    }
-	/*USAMOS UN MAPA DE MOMENTO*/
+	@Service
+	public class GoogleLoginService {
+	    private final UserRepository usuarioRepository;
 
-	    // Simulando la base de datos en memoria usando un HashMap
-    private final Map<String, Usuario> userDatabase = new HashMap<>();
+	    public GoogleLoginService(UserRepository usuarioRepository) {
+	        this.usuarioRepository = usuarioRepository;
+	    }
 
-    // Verificar si el email está registrado en la "base de datos" en memoria
-    public boolean isEmailRegistered(String email) {
-        return userDatabase.containsKey(email);
-    }
+	    public boolean isEmailRegistered(String email) {
+	        return usuarioRepository.existsById(email);
+	    }
 
-    // Validar las credenciales del usuario
-    public boolean validateCredentials(String email, String password) {
-        Usuario user = userDatabase.get(email);
-        return user != null && user.getPassword().equals(password);
-    }
+	    public boolean validateCredentials(String email, String password) {
+	        Usuario user = usuarioRepository.findByEmailAndPassword(email, password);
+	        return user != null;
+	    }
 
-    // Registrar un nuevo usuario (si no está ya registrado)
-    public void register(String email, String password) {
-        if (!isEmailRegistered(email)) {
-            // Crear un nuevo usuario y almacenarlo en el Map
-            userDatabase.put(email, new Usuario(email, password, null, null, null, null, null, password, null));
-        }
-    }
-
-    // Método adicional para obtener un usuario si se necesita (opcional)
-    public Usuario getUserByEmail(String email) {
-        return userDatabase.get(email);
-    }
+	    public void register(String email, String password, String nombre,  Date fechaNacimiento, Double peso, 
+	                         Double altura, Integer frecuenciaCardiacaMaxima, Integer frecuenciaCardiacaReposo, String password1) {
+	        if (!isEmailRegistered(email)) {
+	            Usuario user = new Usuario(email, nombre, fechaNacimiento, peso, altura, 
+	                                        frecuenciaCardiacaMaxima, frecuenciaCardiacaReposo, password1, TipoAutentication.Google);
+	            usuarioRepository.save(user);
+	        }
+	    }
 
 }
