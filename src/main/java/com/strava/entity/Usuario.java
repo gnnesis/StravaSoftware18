@@ -2,6 +2,8 @@ package com.strava.entity;
 
 import java.sql.Date;
 
+import com.strava.dao.TipoAutentication;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 

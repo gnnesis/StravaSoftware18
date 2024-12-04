@@ -1,41 +1,46 @@
 package com.strava.entity;
 
-import java.sql.Date;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import com.strava.dao.TipoDeporte;
+import com.strava.dao.TipoDistancia;
 
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 public class Sesion {
-    private String id; //poner long
+    private long id; //poner long HECHO
     private String titulo;
-    private String deporte; //"cycling" o "running"EUMARACION
-    private double distancia;
-    private Date fechaInicio; //"AAAA-MM-DD"
-    private String horaInicio; //"HH:mm"
+    private TipoDeporte deporte; //"cycling" o "running"EUMARACION HECHO
+    private TipoDistancia distancia;
+    private LocalDate fechaInicio; //"AAAA-MM-DD" HECHO
+    private LocalTime horaInicio; //"HH:mm" HECHO
     private double duracion; 
  
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
-    
-    public Sesion(String id, String titulo, String deporte, double distancia, Date fechaInicio, String horaInicio, double duracion,
-    		Usuario usuario) {
-        this.id = id;
-        this.titulo = titulo;
-        this.deporte = deporte;
-        this.distancia = distancia;
-        this.fechaInicio = fechaInicio;
-        this.horaInicio = horaInicio;
-        this.duracion = duracion;
-        this.usuario = usuario;
-    }
 
+    public Sesion(long id, String titulo, TipoDeporte deporte, TipoDistancia distancia, LocalDate fechaInicio,
+			LocalTime horaInicio, double duracion, Usuario usuario) {
+		super();
+		this.id = id;
+		this.titulo = titulo;
+		this.deporte = deporte;
+		this.distancia = distancia;
+		this.fechaInicio = fechaInicio;
+		this.horaInicio = horaInicio;
+		this.duracion = duracion;
+		this.usuario = usuario;
+	}
 
-    public String getId() {
+	public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -47,36 +52,36 @@ public class Sesion {
         this.titulo = titulo;
     }
 
-    public String getDeporte() {
+    public TipoDeporte getDeporte() {
         return deporte;
     }
 
-    public void setDeporte(String deporte) {
+    public void setDeporte(TipoDeporte deporte) {
         this.deporte = deporte;
     }
 
-    public Double getDistancia() {
+    public TipoDistancia getDistancia() {
         return distancia;
     }
 
-    public void setDistancia(double distancia) {
+    public void setDistancia(TipoDistancia distancia) {
         this.distancia = distancia;
     }
     
 
-    public Date getFechaInicio() {
+    public LocalDate getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
+    public void setFechaInicio(LocalDate fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public String getHoraInicio() {
+    public LocalTime getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(String horaInicio) {
+    public void setHoraInicio(LocalTime horaInicio) {
         this.horaInicio = horaInicio;
     }
 

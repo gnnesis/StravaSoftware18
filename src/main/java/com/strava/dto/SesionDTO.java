@@ -1,75 +1,80 @@
 package com.strava.dto;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import com.strava.dao.TipoDeporte;
+import com.strava.dao.TipoDistancia;
 
 public class SesionDTO {
 
     private String titulo;
-    private String deporte;
-    private double distancia;
-    private Date fechaInicio;
-    private String horaInicio;
+    private TipoDeporte deporte;
+    private TipoDistancia distancia;
+    private LocalDate fechaInicio;
+    private LocalTime horaInicio;
     private double duracion;
 
   
     public SesionDTO() {}
 
-    public SesionDTO(String titulo, String deporte, double distancia, Date fechaInicio, String horaInicio,double duracion) {
-        this.titulo = titulo;
-        this.deporte = deporte;
-        this.distancia = distancia;
-        this.fechaInicio = fechaInicio;
-        this.horaInicio= horaInicio;
-        this.duracion = duracion;
-    }
+	public SesionDTO(String titulo, TipoDeporte deporte, TipoDistancia distancia, LocalDate fechaInicio,
+			LocalTime horaInicio, double duracion) {
+		this.titulo = titulo;
+		this.deporte = deporte;
+		this.distancia = distancia;
+		this.fechaInicio = fechaInicio;
+		this.horaInicio = horaInicio;
+		this.duracion = duracion;
+	}
 
-  
-    public String getTitulo() {
-        return titulo;
-    }
+	public String getTitulo() {
+		return titulo;
+	}
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
 
-    public String getDeporte() {
-        return deporte;
-    }
+	public TipoDeporte getDeporte() {
+		return deporte;
+	}
 
-    public void setDeporte(String deporte) {
-        this.deporte = deporte;
-    }
+	public void setDeporte(TipoDeporte deporte) {
+		this.deporte = deporte;
+	}
 
-    public double getDistancia() {
-        return distancia;
-    }
+	public TipoDistancia getDistancia() {
+		return distancia;
+	}
 
-    public void setDistancia(double distancia) {
-        this.distancia = distancia;
-    }
+	public void setDistancia(TipoDistancia distancia) {
+		this.distancia = distancia;
+	}
 
-    public Date getFechaInicio() {
-        return fechaInicio;
-    }
+	public LocalDate getFechaInicio() {
+		return fechaInicio;
+	}
 
-    public void setFechaInicio(Date fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
+	public void setFechaInicio(LocalDate fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
 
-	public String gethoraInicio() {
-        return horaInicio;
-    }
+	public LocalTime getHoraInicio() {
+		return horaInicio;
+	}
+
+	public void setHoraInicio(LocalTime horaInicio) {
+		this.horaInicio = horaInicio;
+	}
+
+	public double getDuracion() {
+		return duracion;
+	}
+
+	public void setDuracion(double duracion) {
+		this.duracion = duracion;
+	}
 	
-	public void setHoraInicio(String horaInicio) {
-        this.horaInicio = horaInicio;
-    }
 	
-	
-    public double getDuracion() {
-        return duracion;
-    }
-
-    public void setDuracion(double duracion) {
-        this.duracion = duracion;
-    }
 }

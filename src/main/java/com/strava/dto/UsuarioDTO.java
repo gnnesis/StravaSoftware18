@@ -2,7 +2,7 @@ package com.strava.dto;
 
 import java.sql.Date;
 
-import com.strava.entity.TipoAutentication;
+import com.strava.dao.TipoAutentication;
 
 public class UsuarioDTO {
 

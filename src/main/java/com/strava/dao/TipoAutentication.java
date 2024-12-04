@@ -1,4 +1,4 @@
-package com.strava.entity;
+package com.strava.dao;
 
 public enum TipoAutentication {
 	Google, 

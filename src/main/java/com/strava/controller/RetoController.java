@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.strava.dao.TipoDeporte;
 import com.strava.dto.RetoDTO;
 import com.strava.entity.Reto;
 import com.strava.service.RetoService;
@@ -32,7 +33,7 @@ public class RetoController {
     @PostMapping ("/create")
     public ResponseEntity<Reto> crearReto(@RequestBody RetoDTO retoDTO, @RequestHeader("Authorization") String token) {
         Reto nuevoReto = new Reto(retoDTO.getId(), retoDTO.getNombre(), retoDTO.getFechaInicio(),
-                retoDTO.getFechaFin(), retoDTO.getDistancia(), retoDTO.getTiempoObjetivo(), retoDTO.getDeporte(), retoDTO.getEmail());
+                retoDTO.getFechaFin(), retoDTO.getDistancia(), retoDTO.getTiempoObjetivo(), retoDTO.getDeporte(), retoDTO.getEmail(), null );
         Reto retoCreado = retoService.crearReto(nuevoReto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(retoCreado);
     }
@@ -40,7 +41,7 @@ public class RetoController {
     // Obtener los retos activos (últimos 5 o filtrados por fecha o deporte)
     @GetMapping("/active")
     public ResponseEntity<List<Reto>> obtenerRetosActivos(
-            @RequestParam(name = "deporte", required = false) String deporte,
+            @RequestParam(name = "deporte", required = false) TipoDeporte deporte,
             @RequestParam(name = "fechaInicio", required = false) String fechaInicio,
             @RequestParam(name = "fechaFin", required = false) String fechaFin,
             @RequestHeader("Authorization") String token) {

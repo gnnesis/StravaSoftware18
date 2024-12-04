@@ -1,15 +1,18 @@
 package com.strava.service;
 
-import com.strava.entity.Sesion;
-import com.strava.entity.Usuario;
-
-import org.springframework.stereotype.Service;
-
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
+import com.strava.dao.TipoDeporte;
+import com.strava.dao.TipoDistancia;
+import com.strava.entity.Sesion;
+import com.strava.entity.Usuario;
 
 @Service
 public class SesionService {
@@ -29,13 +32,14 @@ public class SesionService {
      * @return La sesión creada.
      * 
      */
-    public Sesion crearSesion(String titulo, String deporte, double distancia, Date fechaInicio, String horaInicio, double duracion, Usuario usuario) {
+    public Sesion crearSesion(String titulo, TipoDeporte deporte, TipoDistancia distancia, LocalDate fechaInicio, LocalTime horaInicio, double duracion, Usuario usuario) {
     	
-    	 if (!deporte.equals("cycling") && !deporte.equals("running")) {
+    	 if (!deporte.equals(TipoDeporte.cycling) && !deporte.equals(TipoDeporte.running)) {
              throw new IllegalArgumentException("Deporte no válido");
          }
 
-    	Sesion nuevaSesion = new Sesion(titulo, deporte, horaInicio, distancia, fechaInicio, horaInicio, duracion, usuario);
+    	 //Contador para id de Sesiones en clase sesiones
+    	Sesion nuevaSesion = new Sesion(0, titulo, deporte, distancia, fechaInicio, horaInicio, duracion, usuario);
         sesiones.add(nuevaSesion);
         return nuevaSesion;
     }
@@ -47,10 +51,10 @@ public class SesionService {
      * @param fechaFinDate    Filtro opcional: fecha de fin (formato: "YYYY-MM-DD").
      * @return Lista de sesiones filtradas (máximo 5 sesiones).
      */
-    public List<Sesion> obtenerSesiones(java.util.Date fechaInicioDate, java.util.Date fechaFinDate) {
+    public List<Sesion> obtenerSesiones(LocalDate fechaInicio, LocalDate fechaFin) {
         return sesiones.stream()
-                .filter(sesion -> (fechaInicioDate == null || sesion.getFechaInicio().compareTo(fechaInicioDate) >= 0) &&
-                        (fechaFinDate == null || sesion.getFechaInicio().compareTo(fechaFinDate) <= 0))
+                .filter(sesion -> (fechaInicio == null || !sesion.getFechaInicio().isBefore(fechaInicio)) &&
+                                  (fechaFin == null || !sesion.getFechaInicio().isAfter(fechaFin)))
                 .limit(5) // Máximo 5 sesiones
                 .collect(Collectors.toList());
     }

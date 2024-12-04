@@ -2,6 +2,9 @@ package com.strava.entity;
 
 import java.sql.Date;
 
+import com.strava.dao.TipoDeporte;
+import com.strava.dao.TipoDistancia;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,9 +20,9 @@ public class Reto {
     private String nombre;
     private Date fechaInicio;
     private Date fechaFin;
-    private Float distancia;  //tiempo u distandia enumeracion de tipo
+    private TipoDistancia distancia;  //tiempo u distandia enumeracion de tipo HECHO
     private Integer tiempoObjetivo;
-    private String deporte;  // "cycling" o "running"  enumeracion
+    private  TipoDeporte deporte;  // "cycling" o "running"  enumeracion HECHO
     private String email;  // Email del usuario que creó el reto para el token
     //lista de ususario apuntados al reto
     
@@ -29,18 +32,21 @@ public class Reto {
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
-    
-	public Reto(Long id, String nombre, Date fechainicio, Date fechaFin, Float distancia, Integer tiempoObjetivo, String deporte, String email) {
-            this.id = id;
-            this.nombre = nombre;
-            this.fechaInicio = fechainicio;
-            this.fechaFin = fechaFin;
-            this.distancia = distancia;
-            this.tiempoObjetivo = tiempoObjetivo;
-            this.deporte = deporte;
-            this.email = email;
-            
-        }
+
+
+	public Reto(Long id, String nombre, Date fechaInicio, Date fechaFin, TipoDistancia distancia,
+			Integer tiempoObjetivo, TipoDeporte deporte, String email, Usuario usuario) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.fechaInicio = fechaInicio;
+		this.fechaFin = fechaFin;
+		this.distancia = distancia;
+		this.tiempoObjetivo = tiempoObjetivo;
+		this.deporte = deporte;
+		this.email = email;
+		this.usuario = usuario;
+	}
 
 
 	public Long getId() {
@@ -83,12 +89,12 @@ public class Reto {
 	}
 
 
-	public Float getDistancia() {
+	public TipoDistancia getDistancia() {
 		return distancia;
 	}
 
 
-	public void setDistancia(Float distancia) {
+	public void setDistancia(TipoDistancia distancia) {
 		this.distancia = distancia;
 	}
 
@@ -103,12 +109,12 @@ public class Reto {
 	}
 
 
-	public String getDeporte() {
+	public TipoDeporte getDeporte() {
 		return deporte;
 	}
 
 
-	public void setDeporte(String deporte) {
+	public void setDeporte(TipoDeporte deporte) {
 		this.deporte = deporte;
 	}
 	

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.strava.entity.TipoAutentication;
+import com.strava.dao.TipoAutentication;
 import com.strava.entity.Usuario;
 
 @Service
