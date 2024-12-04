@@ -6,9 +6,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 public class Sesion {
-    private String id;
+    private String id; //poner long
     private String titulo;
-    private String deporte; //"cycling" o "running"
+    private String deporte; //"cycling" o "running"EUMARACION
     private double distancia;
     private Date fechaInicio; //"AAAA-MM-DD"
     private String horaInicio; //"HH:mm"

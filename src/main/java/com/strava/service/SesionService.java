@@ -27,6 +27,7 @@ public class SesionService {
      * @param duracion     Duración de la sesión en minutos.
      * @param usuario      Usuario que realizó la sesión.
      * @return La sesión creada.
+     * 
      */
     public Sesion crearSesion(String titulo, String deporte, double distancia, Date fechaInicio, String horaInicio, double duracion, Usuario usuario) {
     	

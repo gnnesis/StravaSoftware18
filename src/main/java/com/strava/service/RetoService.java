@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 public class RetoService {
 
     private List<Reto> retos = new ArrayList<>();
+    //interactuar con el reto repository
 
     
     public Reto crearReto(Reto reto, String token) {

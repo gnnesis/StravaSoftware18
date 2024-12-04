@@ -17,11 +17,11 @@ public class Reto {
     private String nombre;
     private Date fechaInicio;
     private Date fechaFin;
-    private Float distancia;
+    private Float distancia;  //tiempo u distandia enumeracion de tipo
     private Integer tiempoObjetivo;
-    private String deporte;  // "cycling" o "running"
+    private String deporte;  // "cycling" o "running"  enumeracion
     private String email;  // Email del usuario que creó el reto para el token
-    
+    //lista de ususario apuntados al reto
     
     /**
      * cada reto tiene un usuario creador
