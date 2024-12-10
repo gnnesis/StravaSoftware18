@@ -6,7 +6,7 @@ import java.net.*;
 public class MetaSocketClient {
 
     private static final String HOST = "localhost";
-    private static final int PORT = 9090;
+    private static final int PORT = 8080;
 
     public static boolean checkEmail(String email) {
         return sendCommand("checkEmail " + email).equalsIgnoreCase("true");
@@ -20,7 +20,7 @@ public class MetaSocketClient {
         return sendCommand("register " + email + " " + password);
     }
 
-    private static String sendCommand(String command) {
+    public static String sendCommand(String command) {
         try (Socket socket = new Socket(HOST, PORT);
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {

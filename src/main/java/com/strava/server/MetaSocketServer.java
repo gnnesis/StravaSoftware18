@@ -1,59 +1,74 @@
 package com.strava.server;
-
 import java.io.*;
 import java.net.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
 
 public class MetaSocketServer {
-
-    private static final int PORT = 9090;
-    private static final ConcurrentHashMap<String, String> userDatabase = new ConcurrentHashMap<>();
+    private static final int PORT = 8080;
+    private static HashMap<String, String> users = new HashMap<>(); // email -> password
 
     public static void main(String[] args) {
+        // Inicializar usuarios en memoria
+        users.put("user1@example.com", "password123");
+        users.put("user2@example.com", "securepassword");
+
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            System.out.println("Meta Socket Server escuchando en el puerto " + PORT);
+            System.out.println("Servidor Meta escuchando en el puerto " + PORT);
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                new Thread(() -> handleClient(clientSocket)).start();
+                System.out.println("Conexión recibida de: " + clientSocket.getInetAddress());
+
+                // Procesar la solicitud del cliente
+                new Thread(new ClientHandler(clientSocket)).start();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static void handleClient(Socket clientSocket) {
-        try (
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)
-        ) {
-            String request = in.readLine();
-            String[] parts = request.split(" ");
-            String command = parts[0];
+    static class ClientHandler implements Runnable {
+        private Socket clientSocket;
 
-            switch (command) {
-                case "checkEmail":
-                    String email = parts[1];
-                    out.println(userDatabase.containsKey(email));
-                    break;
-                case "validateCredentials":
-                    email = parts[1];
-                    String password = parts[2];
-                    out.println(userDatabase.getOrDefault(email, "").equals(password));
-                    break;
-                case "register":
-                    email = parts[1];
-                    password = parts[2];
-                    userDatabase.put(email, password);
-                    out.println("OK");
-                    break;
-                default:
-                    out.println("Invalid Command");
+        public ClientHandler(Socket socket) {
+            this.clientSocket = socket;
+        }
+
+        @Override
+        public void run() {
+            try (
+                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)
+            ) {
+                String request = in.readLine();
+                System.out.println("Solicitud recibida: " + request);
+
+                String response = processRequest(request);
+                out.println(response);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        private String processRequest(String request) {
+            try {
+                String[] parts = request.split(",");
+                String operation = parts[0].trim();
+                String email = parts[1].trim();
+                switch (operation) {
+                    case "verify-email":
+                        boolean isRegistered = users.containsKey(email);
+                        return "{\"registered\": " + isRegistered + "}";
+                    case "validate-login":
+                        String password = parts[2].trim();
+                        boolean valid = password.equals(users.get(email));
+                        return "{\"valid\": " + valid + ", \"message\": \"" + (valid ? "Authentication successful" : "Invalid credentials") + "\"}";
+                    default:
+                        return "{\"error\": \"Unknown operation\"}";
+                }
+            } catch (Exception e) {
+                return "{\"error\": \"Invalid request format\"}";
+            }
         }
     }
 }
-
