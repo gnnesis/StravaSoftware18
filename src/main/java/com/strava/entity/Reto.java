@@ -5,12 +5,13 @@ import java.sql.Date;
 import com.strava.dao.TipoDeporte;
 import com.strava.dao.TipoDistancia;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-
+@Entity //esto mirarlo en eauctions
 public class Reto {
 
 	

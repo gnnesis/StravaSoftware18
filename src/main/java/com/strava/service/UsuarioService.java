@@ -5,10 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.strava.dao.TipoAutentication;
+import com.strava.dao.UserRepository;
+import com.strava.dto.LoginDTO;
+import com.strava.dto.RegistroDTO;
+import com.strava.dto.UsuarioDTO;
 import com.strava.entity.Usuario;
+import com.strava.utils.TokenUtil;
 
 @Service
 public class UsuarioService {
@@ -16,22 +22,52 @@ public class UsuarioService {
     private final List<Usuario> usuarios = new ArrayList<>();
     private final List<String> blacklistTokens = new ArrayList<>();
 
-    public Usuario registrarUsuario(String email, String nombre, Date fechaNacimiento,
-                                    Double peso, Double altura, Integer frecuenciaMaxima,
-                                    Integer frecuenciaReposo, String password, TipoAutentication tipoAutentication) {
+    @Autowired
+    private UserRepository usuarioRepository;
 
-        Optional<Usuario> existente = usuarios.stream()
-                .filter(u -> u.getEmail().equalsIgnoreCase(email))
-                .findFirst();
-
-        if (existente.isPresent()) {
-            throw new IllegalArgumentException("El email ya está registrado: " + email);
+    @Autowired
+    private MetaGateway metaGateway;
+    
+//    public Usuario registrarUsuario(String email, String nombre, Date fechaNacimiento,
+//                                    Double peso, Double altura, Integer frecuenciaMaxima,
+//                                    Integer frecuenciaReposo, String password, TipoAutentication tipoAutentication) {
+//
+//        Optional<Usuario> existente = usuarios.stream()
+//                .filter(u -> u.getEmail().equalsIgnoreCase(email))
+//                .findFirst();
+//
+//        if (existente.isPresent()) {
+//            throw new IllegalArgumentException("El email ya está registrado: " + email);
+//        }
+//
+//        Usuario nuevoUsuario = new Usuario(email, nombre, fechaNacimiento, peso, altura,
+//                                            frecuenciaMaxima, frecuenciaReposo, password, tipoAutentication);
+//        usuarios.add(nuevoUsuario);
+//        return nuevoUsuario;
+//    
+//    }
+    
+    public void registrarUsuario(RegistroDTO registroDTO) {
+        boolean emailExiste = metaGateway.checkEmail(registroDTO.getEmail());
+        if (emailExiste) {
+            throw new RuntimeException("El email ya está registrado en Meta.");
         }
 
-        Usuario nuevoUsuario = new Usuario(email, nombre, fechaNacimiento, peso, altura,
-                                            frecuenciaMaxima, frecuenciaReposo, password, tipoAutentication);
-        usuarios.add(nuevoUsuario);
-        return nuevoUsuario;
+        Usuario usuario = new Usuario(registroDTO.getEmail(), registroDTO.getPassword(), null, null, null, null, null, registroDTO.getNombre(), null);
+        usuarioRepository.save(usuario);
+    }
+    
+    public String login(LoginDTO loginDTO) {
+        boolean loginValido = metaGateway.login(loginDTO.getEmail(), loginDTO.getPassword());
+        if (!loginValido) {
+            throw new RuntimeException("Credenciales inválidas.");
+        }
+
+        return TokenUtil.generarToken(loginDTO.getEmail());
+    }
+    
+    public boolean verificarEmail(String email) {
+        return metaGateway.checkEmail(email);
     }
 
     public Usuario autenticarUsuario(String email, String password) {

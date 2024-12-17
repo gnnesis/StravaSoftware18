@@ -1,10 +1,13 @@
 package com.strava.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import com.strava.dto.LoginDTO;
+import com.strava.dto.RegistroDTO;
 import com.strava.dto.UsuarioDTO;
 import com.strava.entity.Usuario;
 import com.strava.service.UsuarioService;
@@ -17,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequestMapping("/auth")
 public class AuthController {
 
+	@Autowired
     private final UsuarioService usuarioService;
 
     public AuthController(UsuarioService usuarioService) {
@@ -24,40 +28,23 @@ public class AuthController {
     }
 
     @PostMapping("/registro")
-    public ResponseEntity<Usuario> registrarUsuario(@Validated @RequestBody UsuarioDTO usuarioDTO) {
-        // Registrar al usuario
-        Usuario usuario = usuarioService.registrarUsuario(
-                usuarioDTO.getEmail(),
-                usuarioDTO.getNombre(),
-                usuarioDTO.getFechaNacimiento(),
-                usuarioDTO.getPeso(),
-                usuarioDTO.getAltura(),
-                usuarioDTO.getFrecuenciaCardiacaMaxima(),
-                usuarioDTO.getFrecuenciaCardiacaReposo(),
-                usuarioDTO.getPassword(),
-                usuarioDTO.getTipoAutentication());
-        
-        // Generar el token para el usuario registrado
-        String token = TokenUtil.generarToken(usuario.getEmail());
-        
-        // Devolver la respuesta con el usuario y el token
-        return ResponseEntity.ok()
-                             .header("Authorization", token) // Ajuste aquí para incluir el header correctamente
-                             .body(usuario);
+    public ResponseEntity<String> registrarUsuario(@RequestBody RegistroDTO registroDTO) {
+        try {
+            usuarioService.registrarUsuario(registroDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Usuario registrado correctamente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error en el registro: " + e.getMessage());
+        }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UsuarioDTO usuarioDTO) {
-        Usuario usuario = usuarioService.autenticarUsuario(usuarioDTO.getEmail(), usuarioDTO.getPassword());
-
-        // Si no hay usuario
-        if (usuario == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
+    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
+        try {
+            String token = usuarioService.login(loginDTO);
+            return ResponseEntity.ok("Login exitoso. Token: " + token);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Error en el login: " + e.getMessage());
         }
-
-        // Generar un token personalizado
-        String token = TokenUtil.generarToken(usuario.getEmail());
-        return ResponseEntity.ok("Token: " + token);
     }
 
     @PostMapping("/logout")
@@ -78,10 +65,13 @@ public class AuthController {
 
     // Verificar email utilizando Meta
     @GetMapping("/verify-email")
-    public ResponseEntity<String> verifyEmail(@RequestBody String email) {
-        String request = "verify-email," + email;
-        String response = MetaSocketClient.sendCommand(request);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<String> verificarEmail(@RequestParam String email) {
+        boolean emailValido = usuarioService.verificarEmail(email);
+        if (emailValido) {
+            return ResponseEntity.ok("El email está registrado.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El email no está registrado.");
+        }
     }
 
 
