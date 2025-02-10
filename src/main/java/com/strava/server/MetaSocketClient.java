@@ -6,7 +6,7 @@ import java.net.*;
 public class MetaSocketClient {
 
     private static final String HOST = "localhost";
-    private static final int PORT = 8080;
+    private static final int PORT = 12345;
 
     public static boolean checkEmail(String email) {
         return sendCommand("checkEmail " + email).equalsIgnoreCase("true");
