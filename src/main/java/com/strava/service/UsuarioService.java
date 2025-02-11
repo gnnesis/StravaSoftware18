@@ -14,6 +14,7 @@ import com.strava.dto.LoginDTO;
 import com.strava.dto.RegistroDTO;
 import com.strava.dto.UsuarioDTO;
 import com.strava.entity.Usuario;
+import com.strava.server.MetaSocketClient;
 import com.strava.utils.TokenUtil;
 
 @Service
@@ -26,7 +27,7 @@ public class UsuarioService {
     private UserRepository usuarioRepository;
 
     @Autowired
-    private MetaGateway metaGateway;
+    private MetaSocketClient metaSocketClient;
     
 //    public Usuario registrarUsuario(String email, String nombre, Date fechaNacimiento,
 //                                    Double peso, Double altura, Integer frecuenciaMaxima,
@@ -48,7 +49,7 @@ public class UsuarioService {
 //    }
     
     public void registrarUsuario(RegistroDTO registroDTO) {
-        boolean emailExiste = metaGateway.checkEmail(registroDTO.getEmail());
+        boolean emailExiste = metaSocketClient.checkEmail(registroDTO.getEmail());
         if (emailExiste) {
             throw new RuntimeException("El email ya está registrado en Meta.");
         }
@@ -58,7 +59,7 @@ public class UsuarioService {
     }
     
     public String login(LoginDTO loginDTO) {
-        boolean loginValido = metaGateway.login(loginDTO.getEmail(), loginDTO.getPassword());
+        boolean loginValido = metaSocketClient.login(loginDTO.getEmail(), loginDTO.getPassword());
         if (!loginValido) {
             throw new RuntimeException("Credenciales inválidas.");
         }
@@ -67,7 +68,7 @@ public class UsuarioService {
     }
     
     public boolean verificarEmail(String email) {
-        return metaGateway.checkEmail(email);
+        return metaSocketClient.checkEmail(email);
     }
 
     public Usuario autenticarUsuario(String email, String password) {

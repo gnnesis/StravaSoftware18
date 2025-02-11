@@ -20,8 +20,11 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequestMapping("/auth")
 public class AuthController {
 
-	@Autowired
+    @Autowired
     private final UsuarioService usuarioService;
+
+    @Autowired
+    private MetaSocketClient metaSocketClient; // Inyección de MetaSocketClient
 
     public AuthController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
@@ -74,12 +77,13 @@ public class AuthController {
         }
     }
 
-
-    //Validar login utilizando Meta
+    // Validar login utilizando Meta
     @PostMapping("/validate-login")
     public ResponseEntity<String> validateLogin(@RequestBody LoginRequest loginRequest) {
+        // Crear el request para enviar al servidor
         String request = "validate-login," + loginRequest.getEmail() + "," + loginRequest.getPassword();
-        String response = MetaSocketClient.sendCommand(request);
+        // Llamar a sendRequest usando la instancia inyectada de MetaSocketClient
+        String response = metaSocketClient.sendRequest("VALIDATE_LOGIN", loginRequest.getEmail(), loginRequest.getPassword());
         return ResponseEntity.ok(response);
     }
 
