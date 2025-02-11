@@ -1,88 +1,177 @@
 package com.strava.server;
 
+
+
 import org.springframework.stereotype.Service;
+
 import java.io.*;
+
 import java.net.*;
-import java.util.StringTokenizer;
+
+
 
 @Service
+
 public class MetaSocketClient {
 
+
+
     private String serverIP;
+
     private int serverPort;
+
     private static final String DELIMITER = "#";
 
-    // Constructor para inicializar la IP y el puerto del servidor
+
+
+    // Constructor
+
     public MetaSocketClient(String serverIP, int serverPort) {
+
         this.serverIP = serverIP;
+
         this.serverPort = serverPort;
+
     }
 
-    // Método para enviar solicitudes al servidor
+
+
+    // Método para enviar solicitudes al servidor y recibir respuesta
+
     public String sendRequest(String requestType, String... params) {
+
         String request = requestType + DELIMITER + String.join(DELIMITER, params);
-        String response = null;
-        StringTokenizer tokenizer = null;
 
-        Socket socket = null;
-        try {
-            // Establecer el socket con timeout para evitar bloqueos indefinidos
-            socket = new Socket();
-            socket.connect(new InetSocketAddress(serverIP, serverPort), 5000); // Timeout de 5 segundos
+        String response = "ERROR";
 
-            System.out.println("Conexión establecida con el servidor: " + serverIP + ":" + serverPort); // Log de conexión
 
-            try (DataInputStream in = new DataInputStream(socket.getInputStream());
-                 DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
 
-                // Enviar la solicitud
-                System.out.println("Enviando solicitud: " + request); // Log de la solicitud enviada
-                out.writeUTF(request);
-                System.out.println("Solicitud enviada, esperando respuesta...");
+        try (Socket socket = new Socket(serverIP, serverPort);
 
-                // Leer respuesta
-                response = in.readUTF();
-                System.out.println("Respuesta recibida: " + response); // Log de la respuesta recibida
+             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
-                // Procesar la respuesta
-                tokenizer = new StringTokenizer(response, DELIMITER);
+             DataInputStream in = new DataInputStream(socket.getInputStream())) {
 
-            }
 
-        } catch (UnknownHostException e) {
-            System.err.println(" # MetaGateway: Error de conexión: " + e.getMessage());
-        } catch (EOFException e) {
-            System.err.println(" # MetaGateway: Fin de flujo inesperado: " + e.getMessage());
+
+            // Enviar solicitud
+
+            System.out.println("➡ Enviando: " + request);
+
+            out.writeUTF(request);
+
+            out.flush();
+
+
+
+            // Leer respuesta
+
+            response = in.readUTF();
+
+            System.out.println("⬅ Respuesta: " + response);
+
+
+
         } catch (IOException e) {
-            System.err.println(" # MetaGateway: Error de E/S: " + e.getMessage());
-        } finally {
-            // Asegurarse de que el socket se cierre correctamente
-            if (socket != null && !socket.isClosed()) {
-                try {
-                    socket.close();
-                    System.out.println("Socket cerrado correctamente.");
-                } catch (IOException e) {
-                    System.err.println(" # MetaGateway: Error al cerrar el socket: " + e.getMessage());
-                }
-            }
+
+            System.err.println(" # MetaGateway: Error en la conexión - " + e.getMessage());
+
         }
 
-        // Verificar si la respuesta contiene un token "OK" y devolver el siguiente token
-        if (tokenizer != null && tokenizer.hasMoreTokens()) {
-            String status = tokenizer.nextToken();
-            return status.equals("OK") ? tokenizer.nextToken() : "ERROR";
-        }
 
-        return "ERROR"; // En caso de que no haya tokens o no sea 'OK'
+
+        return response;
+
     }
 
-    // Método para comprobar si el correo electrónico ya existe
+
+
+    // Método para registrar un usuario
+
+    public boolean register(String email, String password) {
+
+        return "OK".equals(sendRequest("REGISTER", email, password));
+
+    }
+
+
+
+    // Método para comprobar si el correo existe
+
     public boolean checkEmail(String email) {
+
         return "EMAIL_FOUND".equals(sendRequest("CHECK_EMAIL", email));
+
     }
 
-    // Método para realizar el login con email y contraseña
+
+
+    // Método para iniciar sesión
+
     public boolean login(String email, String password) {
+
         return "LOGIN_SUCCESS".equals(sendRequest("VALIDATE_LOGIN", email, password));
+
     }
+
+
+
+    // Método para crear una sesión de entrenamiento
+
+    public boolean createTrainingSession(String email, double distance, String duration, String type) {
+
+        return "SESSION_CREATED".equals(sendRequest("CREATE_TRAINING_SESSION", email, String.valueOf(distance), duration, type));
+
+    }
+
+
+
+    // Método para obtener las sesiones del usuario
+
+    public String getMyTrainingSessions(String email) {
+
+        return sendRequest("GET_MY_TRAINING_SESSIONS", email);
+
+    }
+
+
+
+    // Método de prueba principal
+
+    public static void main(String[] args) {
+
+        MetaSocketClient client = new MetaSocketClient("localhost", 12345);
+
+
+
+        // Registrar usuario
+
+        boolean isRegistered = client.register("test@example.com", "password123");
+
+        System.out.println("Registro exitoso: " + isRegistered);
+
+        // Intentar login
+
+        boolean isLoggedIn = client.login("test@example.com", "password123");
+
+        System.out.println("Login exitoso: " + isLoggedIn);
+
+
+
+        // Crear sesión de entrenamiento
+
+        boolean sessionCreated = client.createTrainingSession("test@example.com", 10.5, "00:45:30", "Running");
+
+        System.out.println("Sesión de entrenamiento creada: " + sessionCreated);
+
+
+
+        // Obtener sesiones del usuario
+
+        String sessions = client.getMyTrainingSessions("test@example.com");
+
+        System.out.println("Sesiones del usuario: " + sessions);
+
+    }
+
 }
