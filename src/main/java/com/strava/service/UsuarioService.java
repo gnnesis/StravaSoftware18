@@ -29,59 +29,63 @@ public class UsuarioService {
     @Autowired
     private MetaGateway mg;
     
-//    public Usuario registrarUsuario(String email, String nombre, Date fechaNacimiento,
-//                                    Double peso, Double altura, Integer frecuenciaMaxima,
-//                                    Integer frecuenciaReposo, String password, TipoAutentication tipoAutentication) {
-//
-//        Optional<Usuario> existente = usuarios.stream()
-//                .filter(u -> u.getEmail().equalsIgnoreCase(email))
-//                .findFirst();
-//
-//        if (existente.isPresent()) {
-//            throw new IllegalArgumentException("El email ya está registrado: " + email);
-//        }
-//
-//        Usuario nuevoUsuario = new Usuario(email, nombre, fechaNacimiento, peso, altura,
-//                                            frecuenciaMaxima, frecuenciaReposo, password, tipoAutentication);
-//        usuarios.add(nuevoUsuario);
-//        return nuevoUsuario;
-//    
-//    }
+    public void registrarUsuario(UsuarioDTO u) {
+
+       Optional<Usuario> existente = usuarioRepository.findById(u.getEmail());
+       
+       //sis ese
+       if (existente.isPresent()) {
+    	  System.out.println("ese email ya existe en nuestra BD");
+		
+	}else {
+		 // Convertimos el DTO a una entidad de usuario
+	    Usuario nuevoUsuario = new Usuario(
+	            u.getEmail(), 
+	            u.getNombre(), 
+	            u.getFechaNacimiento(), 
+	            u.getPeso(), 
+	            u.getAltura(), 
+	            u.getFrecuenciaCardiacaMaxima(), 
+	            u.getFrecuenciaCardiacaReposo(), 
+	            u.getPassword(),
+	            u.getTipoAutentication()
+	    );
+
+	  System.out.println(nuevoUsuario.toString());
+	  usuarioRepository.save(nuevoUsuario);
+	}
+       
+       
+    }
     
     
     
+
     
     
     
+    public void registrarUsuario(RegistroDTO registroDTO) {
+        boolean emailExiste = mg.checkEmail(registroDTO.getEmail());
+        if (emailExiste) {
+            throw new RuntimeException("El email ya está registrado en Meta.");
+        }
+
+        Usuario usuario = new Usuario(registroDTO.getEmail(), registroDTO.getPassword(), null, null, null, null, null, registroDTO.getNombre(), null);
+        usuarioRepository.save(usuario);
+    }
     
+    public String login(LoginDTO loginDTO) {
+        boolean loginValido = mg.login(loginDTO.getEmail(), loginDTO.getPassword());
+        if (!loginValido) {
+            throw new RuntimeException("Credenciales inválidas.");
+        }
+
+        return TokenUtil.generarToken(loginDTO.getEmail());
+    }
     
-    
-    
-    
-    
-//    
-//    public void registrarUsuario(RegistroDTO registroDTO) {
-//        boolean emailExiste = mg.checkEmail(registroDTO.getEmail());
-//        if (emailExiste) {
-//            throw new RuntimeException("El email ya está registrado en Meta.");
-//        }
-//
-//        Usuario usuario = new Usuario(registroDTO.getEmail(), registroDTO.getPassword(), null, null, null, null, null, registroDTO.getNombre(), null);
-//        usuarioRepository.save(usuario);
-//    }
-//    
-//    public String login(LoginDTO loginDTO) {
-//        boolean loginValido = mg.login(loginDTO.getEmail(), loginDTO.getPassword());
-//        if (!loginValido) {
-//            throw new RuntimeException("Credenciales inválidas.");
-//        }
-//
-//        return TokenUtil.generarToken(loginDTO.getEmail());
-//    }
-//    
-//    public boolean verificarEmail(String email) {
-//        return mg.checkEmail(email);
-//    }
+    public boolean verificarEmail(String email) {
+        return mg.checkEmail(email);
+    }
 
     public Usuario autenticarUsuario(String email, String password) {
         Usuario usuario = usuarios.stream()

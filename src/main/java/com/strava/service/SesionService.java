@@ -36,17 +36,17 @@ public class SesionService {
 	 * @return La sesión creada.
 	 * 
 	 */
-	//    public Sesion crearSesion(String titulo, TipoDeporte deporte, TipoDistancia distancia, LocalDate fechaInicio, LocalTime horaInicio, double duracion, Usuario usuario) {
-	//    	
-	//    	 if (!deporte.equals(TipoDeporte.cycling) && !deporte.equals(TipoDeporte.running)) {
-	//             throw new IllegalArgumentException("Deporte no válido");
-	//         }
-	//
-	//    	 //Contador para id de Sesiones en clase sesiones
-	//    	Sesion nuevaSesion = new Sesion(0, titulo, deporte, distancia, fechaInicio, horaInicio, duracion, usuario);
-	//        sesiones.add(nuevaSesion);
-	//        return nuevaSesion;
-	//    }
+	    public Sesion crearSesion(String titulo, TipoDeporte deporte, TipoDistancia distancia, LocalDate fechaInicio, LocalTime horaInicio, double duracion, Usuario usuario) {
+	    	
+	    	 if (!deporte.equals(TipoDeporte.CYCLING) && !deporte.equals(TipoDeporte.RUNNING)) {
+	             throw new IllegalArgumentException("Deporte no válido");
+	         }
+	
+	    	 //Contador para id de Sesiones en clase sesiones
+	    	Sesion nuevaSesion = new Sesion(0, titulo, deporte, distancia, fechaInicio, horaInicio, duracion, usuario);
+	        sesiones.add(nuevaSesion);
+	        return nuevaSesion;
+	    }
 
 
 	public Sesion crearSesion(TipoAutentication tipoGateway, String titulo, TipoDeporte deporte, TipoDistancia distancia, 

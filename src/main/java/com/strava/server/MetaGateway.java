@@ -21,7 +21,7 @@ import com.strava.entity.Usuario;
 public class MetaGateway implements IMetaGateway{
 
 	private String serverIP;
-	private int serverPort;
+	private int  serverPort;
 	private static String DELIMITER = "#";
 
     // Constructor
@@ -32,13 +32,49 @@ public class MetaGateway implements IMetaGateway{
    
     public MetaGateway() {
     }
+    
+    
+    
+    
+    // MAIN
+    public static void main(String[] args) {
+        MetaGateway client = new MetaGateway("127.0.0.1", 9500);
+
+
+
+        // Registrar usuario
+/*        boolean isRegistered = client.register("test@example.com", "password123");
+        System.out.println("Registro exitoso: " + isRegistered);
+
+        // Intentar login
+        boolean isLoggedIn = client.login("test@example.com", "password123");
+        System.out.println("Login exitoso: " + isLoggedIn);
+*/
+
+
+        // Crear sesión de entrenamiento
+        String sessionCreated = client.crearSesionEntrenamiento("test@example.com", TipoDistancia.TIEMPO.toString(), 10.5, TipoDeporte.RUNNING.toString());
+        System.out.println("Sesión de entrenamiento creada: " + sessionCreated);
+
+
+/*
+       // Obtener sesiones del usuario
+        String sessions = client.getMyTrainingSessions("test@example.com");
+        System.out.println("Sesiones del usuario: " + sessions);
+*/
+        
+        
+        
+    }
 
     // Método para enviar solicitudes al servidor y recibir respuesta
     public String sendRequest(String requestType, String... params) {
         String request = requestType + DELIMITER + String.join(DELIMITER, params);
         String response = "ERROR";
 
-        try (Socket socket = new Socket(serverIP, serverPort);
+        System.out.println("Intentando conectar con el servidor");
+        try (Socket socket = new Socket( serverIP,serverPort );
+        		
              DataOutputStream out = new DataOutputStream(socket.getOutputStream());
              DataInputStream in = new DataInputStream(socket.getInputStream())) {
 
@@ -54,6 +90,7 @@ public class MetaGateway implements IMetaGateway{
 
         } catch (IOException e) {
             System.err.println(" # MetaGateway: Error en la conexión - " + e.getMessage());
+            e.printStackTrace();
         }
 
         return response;
@@ -62,39 +99,39 @@ public class MetaGateway implements IMetaGateway{
 
 
 
-//    // Método para registrar un usuario
-//
-//    public boolean register(String email, String password) {
-//        return "OK".equals(sendRequest("REGISTER", email, password));
-//    }
-//
-//
-//
-//    // Método para comprobar si el correo existe
-//    public boolean checkEmail(String email) {
-//        return "EMAIL_FOUND".equals(sendRequest("CHECK_EMAIL", email));
-//
-//    }
-//
-//
-//
-//    // Método para iniciar sesión
-//    public boolean login(String email, String password) {
-//        return "LOGIN_SUCCESS".equals(sendRequest("VALIDATE_LOGIN", email, password));
-//
-//    }
-//
+    // Método para registrar un usuario
+
+    public boolean register(String email, String password) {
+        return "OK".equals(sendRequest("REGISTER", email, password));
+    }
+
+
+
+    // Método para comprobar si el correo existe
+    public boolean checkEmail(String email) {
+        return "EMAIL_FOUND".equals(sendRequest("CHECK_EMAIL", email));
+
+    }
+
+
+
+    // Método para iniciar sesión
+    public boolean login(String email, String password) {
+        return "LOGIN_SUCCESS".equals(sendRequest("VALIDATE_LOGIN", email, password));
+
+    }
+
 
 
     // Método para crear una sesión de entrenamiento
-    public String crearSesionEntrenamiento(String email, double distance, String duration, String type) {
+    public String crearSesionEntrenamiento(String email, String distancia, double duration, String type) {
     	
     	System.out.println("creando sesion de entrenamiento...");
     	
-    	String response = sendRequest("CREAR_SESION_ENTRENAMIENTO", email, String.valueOf(distance), duration, type);
+    	String response = sendRequest("CREAR_SESION_ENTRENAMIENTO", email,  distancia, String.valueOf(duration), type);
     	 // Si el servidor responde con un ID, lo devolvemos
         if (response.startsWith("SESION_CREADA#")) {
-            return response.split("#")[1]; // Extrae el ID de la sesión
+            return response.split("#")[1]; // Extrae el correo de la sesión
         }
         return null; // Fallo al crear la sesión
     
@@ -109,45 +146,6 @@ public class MetaGateway implements IMetaGateway{
 //    }
 
 
-
-    // MAIN
-    public static void main(String[] args) {
-        MetaGateway client = new MetaGateway("localhost", 12345);
-
-
-
-        // Registrar usuario
-
-/*        boolean isRegistered = client.register("test@example.com", "password123");
-
-        System.out.println("Registro exitoso: " + isRegistered);
-
-        // Intentar login
-
-        boolean isLoggedIn = client.login("test@example.com", "password123");
-
-        System.out.println("Login exitoso: " + isLoggedIn);
-*/
-
-
-        // Crear sesión de entrenamiento
-
-        String sessionCreated = client.crearSesionEntrenamiento("test@example.com", 10.5, "00:45:30", "Running");
-
-        System.out.println("Sesión de entrenamiento creada: " + sessionCreated);
-
-
-/*
-       // Obtener sesiones del usuario
-
-        String sessions = client.getMyTrainingSessions("test@example.com");
-
-        System.out.println("Sesiones del usuario: " + sessions);
-*/
-        
-        
-        
-    }
 
 
 	@Override
