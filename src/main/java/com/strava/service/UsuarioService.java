@@ -1,37 +1,30 @@
 package com.strava.service;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.strava.dao.TipoAutentication;
 import com.strava.dao.UserRepository;
 import com.strava.dto.LoginDTO;
 import com.strava.dto.RegistroDTO;
 import com.strava.dto.UsuarioDTO;
 import com.strava.entity.Usuario;
-import com.strava.server.MetaGateway;
 import com.strava.utils.TokenUtil;
 
 @Service
 public class UsuarioService {
-
-    private final List<Usuario> usuarios = new ArrayList<>();
-    private final List<String> blacklistTokens = new ArrayList<>();
-
+    
+    private final UserRepository usuarioRepository;
+    
     @Autowired
-    private UserRepository usuarioRepository;
-
-    @Autowired
-    private MetaGateway mg;
+    public UsuarioService(UserRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
     
     public void registrarUsuario(UsuarioDTO u) {
 
-       Optional<Usuario> existente = usuarioRepository.findById(u.getEmail());
+       Optional<Usuario> existente = usuarioRepository.findByEmail(u.getEmail());
        
        //sis ese
        if (existente.isPresent()) {

@@ -7,19 +7,42 @@ import java.time.LocalTime;
 import com.strava.dao.TipoDeporte;
 import com.strava.dao.TipoDistancia;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "sesiones")
 public class Sesion {
-    private long id; //poner long HECHO
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    
     private String titulo;
-    private TipoDeporte deporte; //"cycling" o "running"EUMARACION HECHO
+    
+    @Enumerated(EnumType.STRING)
+    private TipoDeporte deporte;
+    
+    @Enumerated(EnumType.STRING)
     private TipoDistancia distancia;
-    private LocalDate fechaInicio; //"AAAA-MM-DD" HECHO
-    private LocalTime horaInicio; //"HH:mm" HECHO
-    private double duracion; 
+    
+    @Column(name = "fecha_inicio")
+    private LocalDate fechaInicio;
+    
+    @Column(name = "hora_inicio")
+    private LocalTime horaInicio;
+    
+    private double duracion;
  
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 

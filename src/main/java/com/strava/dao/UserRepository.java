@@ -10,6 +10,6 @@ import com.strava.entity.Usuario;
 @Repository
 public interface UserRepository extends JpaRepository<Usuario, String>{
 
-	Optional<Usuario> findByNickname(String nickname);
+	//Optional<Usuario> findByNickname(String nickname);
     Optional<Usuario> findByEmail(String email);
 }

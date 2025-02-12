@@ -5,34 +5,47 @@ import java.sql.Date;
 import com.strava.dao.TipoDeporte;
 import com.strava.dao.TipoDistancia;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-@Entity //esto mirarlo en eauctions
+import jakarta.persistence.Table;
+@Entity
+@Table(name = "retos")
 public class Reto {
-
-	
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nombre;
-    private Date fechaInicio;
-    private Date fechaFin;
-    private TipoDistancia distancia;  //tiempo u distandia enumeracion de tipo HECHO
-    private Integer tiempoObjetivo;
-    private  TipoDeporte deporte;  // "cycling" o "running"  enumeracion HECHO
-    private String email;  // Email del usuario que creó el reto para el token
-    //lista de ususario apuntados al reto
     
-    /**
-     * cada reto tiene un usuario creador
-     */
-    @ManyToOne
+    private String nombre;
+    
+    @Column(name = "fecha_inicio")
+    private Date fechaInicio;
+    
+    @Column(name = "fecha_fin")
+    private Date fechaFin;
+    
+    @Enumerated(EnumType.STRING)
+    private TipoDistancia distancia;
+    
+    @Column(name = "tiempo_objetivo")
+    private Integer tiempoObjetivo;
+    
+    @Enumerated(EnumType.STRING)
+    private TipoDeporte deporte;
+    
+    private String email;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+    
 
 
 	public Reto(Long id, String nombre, Date fechaInicio, Date fechaFin, TipoDistancia distancia,

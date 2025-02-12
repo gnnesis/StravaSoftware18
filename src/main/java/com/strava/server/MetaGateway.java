@@ -8,8 +8,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.strava.dao.SesionRepository;
 import com.strava.dao.TipoDeporte;
@@ -18,25 +21,28 @@ import com.strava.dao.UserRepository;
 import com.strava.entity.Sesion;
 import com.strava.entity.Usuario;
 
+import jakarta.persistence.EntityNotFoundException;
 @Service
 public class MetaGateway implements IMetaGateway {
+    private static final Logger logger = LoggerFactory.getLogger(MetaGateway.class);
     private String serverIP;
     private int serverPort;
-    private static String DELIMITER = "#";
+    private static final String DELIMITER = "#";
+
+    private final SesionRepository sesionRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    private SesionRepository sesionRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    public MetaGateway() {
+    public MetaGateway(SesionRepository sesionRepository, UserRepository userRepository) {
+        this.sesionRepository = sesionRepository;
+        this.userRepository = userRepository;
         this.serverIP = "127.0.0.1";
         this.serverPort = 9500;
     }
 
+    @Transactional
     public String crearSesionEntrenamiento(String email, String distancia, double duration, String type) {
-        System.out.println("creando sesion de entrenamiento...");
+        logger.info("Creando sesión de entrenamiento para usuario: {}", email);
         
         String response = sendRequest("CREAR_SESION_ENTRENAMIENTO", 
                                    email,
@@ -51,33 +57,30 @@ public class MetaGateway implements IMetaGateway {
                 LocalDate fechaInicio = LocalDate.parse(parts[2]);
                 LocalTime horaInicio = LocalTime.parse(parts[3]);
 
-                Optional<Usuario> usuarioOpt = userRepository.findByEmail(email);
-                if (usuarioOpt.isPresent()) {
-                    Usuario usuario = usuarioOpt.get();
+                Usuario usuario = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado con email: " + email));
                     
-                    Sesion sesion = new Sesion();
-                    sesion.setId(sessionId);
-                    sesion.setTitulo("Sesión de " + type);
-                    sesion.setDeporte(TipoDeporte.valueOf(type));
-                    sesion.setDistancia(TipoDistancia.valueOf(distancia));
-                    sesion.setFechaInicio(fechaInicio);
-                    sesion.setHoraInicio(horaInicio);
-                    sesion.setDuracion(duration);
-                    sesion.setUsuario(usuario);
+                Sesion sesion = new Sesion();
+                sesion.setId(sessionId);
+                sesion.setTitulo("Sesión de " + type);
+                sesion.setDeporte(TipoDeporte.valueOf(type));
+                sesion.setDistancia(TipoDistancia.valueOf(distancia));
+                sesion.setFechaInicio(fechaInicio);
+                sesion.setHoraInicio(horaInicio);
+                sesion.setDuracion(duration);
+                sesion.setUsuario(usuario);
 
-                    sesionRepository.save(sesion);
-                    System.out.println("Sesión guardada en BD con ID: " + sessionId);
-                    
-                    return String.valueOf(sessionId);
-                } else {
-                    System.err.println("Usuario no encontrado con email: " + email);
-                }
+                sesion = sesionRepository.save(sesion);
+                logger.info("Sesión guardada exitosamente en BD con ID: {}", sessionId);
+                
+                return String.valueOf(sessionId);
             } catch (Exception e) {
-                System.err.println("Error al guardar la sesión en BD: " + e.getMessage());
-                e.printStackTrace();
+                logger.error("Error al guardar la sesión en BD: {}", e.getMessage(), e);
+                throw new RuntimeException("Error al crear la sesión de entrenamiento", e);
             }
         }
         
+        logger.error("No se pudo crear la sesión de entrenamiento");
         return null;
     }
     
@@ -92,22 +95,6 @@ public class MetaGateway implements IMetaGateway {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public static void main(String[] args) {
-	    MetaGateway client = new MetaGateway();
-	    
-	    String sessionId = client.crearSesionEntrenamiento(
-	        "test@example.com",
-	        "TIEMPO",
-	        10.5,
-	        "RUNNING"
-	    );
-	    
-	    System.out.println("Sesión creada con ID: " + sessionId);
-	}
-	
-	
-	
 	
 	
 	
@@ -142,5 +129,3 @@ public class MetaGateway implements IMetaGateway {
     }
 
 }
-
-

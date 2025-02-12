@@ -4,22 +4,43 @@ import java.sql.Date;
 
 import com.strava.dao.TipoAutentication;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 
 @Entity
-
+@Table(name = "usuarios")
 public class Usuario {
-	@Id
+    @Id
     private String email;
+    
+    @Column(nullable = false)
     private String nombre;
-    private Date fechaNacimiento; 
-    private Double peso; 
-    private Double altura; 
+    
+    @Column(name = "fecha_nacimiento")
+    private Date fechaNacimiento;
+    
+    private Double peso;
+    private Double altura;
+    
+    @Column(name = "frecuencia_maxima")
     private Integer frecuenciaMaxima;
+    
+    @Column(name = "frecuencia_reposo")
     private Integer frecuenciaReposo;
+    
     private String password;
-    private TipoAutentication tipoAutentication ;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_autenticacion")
+    private TipoAutentication tipoAutentication;
+    
+    
+    
 
     public Usuario(String email, String nombre, Date fechaNacimiento, Double peso, Double altura, Integer frecuenciaMaxima, Integer frecuenciaReposo, String password, TipoAutentication tipoAutentication2) {
         this.email = email;

@@ -15,20 +15,22 @@ import com.strava.service.UsuarioService;
 import com.strava.utils.TokenUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
+import com.strava.service.UsuarioService;
 
-@RestController
+
 @RequestMapping("/auth")
+@RestController
 public class AuthController {
-
-    @Autowired
+    
     private final UsuarioService usuarioService;
-
+    
     @Autowired
-    private MetaGateway metaSocketClient; // Inyección de MetaSocketClient
-
     public AuthController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
+    
 
     @PostMapping("/registro")
     public ResponseEntity<String> registrarUsuario(@RequestBody RegistroDTO registroDTO) {
