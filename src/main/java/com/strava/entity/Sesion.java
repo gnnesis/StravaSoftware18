@@ -36,6 +36,10 @@ public class Sesion {
 		this.usuario = usuario;
 	}
 
+	public Sesion() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public long getId() {
         return id;
     }

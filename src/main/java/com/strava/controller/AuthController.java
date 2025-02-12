@@ -10,9 +10,9 @@ import com.strava.dto.LoginDTO;
 import com.strava.dto.RegistroDTO;
 import com.strava.dto.UsuarioDTO;
 import com.strava.entity.Usuario;
+import com.strava.server.MetaGateway;
 import com.strava.service.UsuarioService;
 import com.strava.utils.TokenUtil;
-import com.strava.server.MetaGateway;
 
 import jakarta.servlet.http.HttpServletRequest;
 
