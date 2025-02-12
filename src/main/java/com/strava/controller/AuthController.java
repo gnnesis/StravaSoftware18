@@ -12,7 +12,7 @@ import com.strava.dto.UsuarioDTO;
 import com.strava.entity.Usuario;
 import com.strava.service.UsuarioService;
 import com.strava.utils.TokenUtil;
-import com.strava.server.MetaSocketClient;
+import com.strava.server.MetaGateway;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -24,7 +24,7 @@ public class AuthController {
     private final UsuarioService usuarioService;
 
     @Autowired
-    private MetaSocketClient metaSocketClient; // Inyección de MetaSocketClient
+    private MetaGateway metaSocketClient; // Inyección de MetaSocketClient
 
     public AuthController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;

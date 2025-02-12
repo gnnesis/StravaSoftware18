@@ -14,7 +14,7 @@ import com.strava.dto.LoginDTO;
 import com.strava.dto.RegistroDTO;
 import com.strava.dto.UsuarioDTO;
 import com.strava.entity.Usuario;
-import com.strava.server.MetaSocketClient;
+import com.strava.server.MetaGateway;
 import com.strava.utils.TokenUtil;
 
 @Service
@@ -27,7 +27,7 @@ public class UsuarioService {
     private UserRepository usuarioRepository;
 
     @Autowired
-    private MetaSocketClient metaSocketClient;
+    private MetaGateway mg;
     
 //    public Usuario registrarUsuario(String email, String nombre, Date fechaNacimiento,
 //                                    Double peso, Double altura, Integer frecuenciaMaxima,
@@ -48,28 +48,40 @@ public class UsuarioService {
 //    
 //    }
     
-    public void registrarUsuario(RegistroDTO registroDTO) {
-        boolean emailExiste = metaSocketClient.checkEmail(registroDTO.getEmail());
-        if (emailExiste) {
-            throw new RuntimeException("El email ya está registrado en Meta.");
-        }
-
-        Usuario usuario = new Usuario(registroDTO.getEmail(), registroDTO.getPassword(), null, null, null, null, null, registroDTO.getNombre(), null);
-        usuarioRepository.save(usuario);
-    }
     
-    public String login(LoginDTO loginDTO) {
-        boolean loginValido = metaSocketClient.login(loginDTO.getEmail(), loginDTO.getPassword());
-        if (!loginValido) {
-            throw new RuntimeException("Credenciales inválidas.");
-        }
-
-        return TokenUtil.generarToken(loginDTO.getEmail());
-    }
     
-    public boolean verificarEmail(String email) {
-        return metaSocketClient.checkEmail(email);
-    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    
+//    public void registrarUsuario(RegistroDTO registroDTO) {
+//        boolean emailExiste = mg.checkEmail(registroDTO.getEmail());
+//        if (emailExiste) {
+//            throw new RuntimeException("El email ya está registrado en Meta.");
+//        }
+//
+//        Usuario usuario = new Usuario(registroDTO.getEmail(), registroDTO.getPassword(), null, null, null, null, null, registroDTO.getNombre(), null);
+//        usuarioRepository.save(usuario);
+//    }
+//    
+//    public String login(LoginDTO loginDTO) {
+//        boolean loginValido = mg.login(loginDTO.getEmail(), loginDTO.getPassword());
+//        if (!loginValido) {
+//            throw new RuntimeException("Credenciales inválidas.");
+//        }
+//
+//        return TokenUtil.generarToken(loginDTO.getEmail());
+//    }
+//    
+//    public boolean verificarEmail(String email) {
+//        return mg.checkEmail(email);
+//    }
 
     public Usuario autenticarUsuario(String email, String password) {
         Usuario usuario = usuarios.stream()
