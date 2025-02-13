@@ -21,12 +21,12 @@ public class AuthenticationFactory {
         this.userRepository = userRepository;
     }
     
-    public IMetaGateway creacionGateways(TipoAutentication t) {
+    public static IMetaGateway creacionGateways(TipoAutentication t) {
         switch (t) {
             case GOOGLE: 
                 return null; // Implementar cuando sea necesario
             case META:
-                return new MetaGateway(sesionRepository, userRepository);
+                return new MetaGateway();
             default:
                 return null;
         }

@@ -17,6 +17,7 @@ public class UsuarioDTO {
     private TipoAutentication tipoAutentication;
 
 	public UsuarioDTO() {
+		super();
 	}
 	
  
@@ -107,4 +108,5 @@ public class UsuarioDTO {
 	public void setTipoAutentication(TipoAutentication tipoAutentication) {
 		this.tipoAutentication = tipoAutentication;
 	}
+	
 }

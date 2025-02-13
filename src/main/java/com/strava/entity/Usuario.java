@@ -62,6 +62,10 @@ public class Usuario {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Usuario(String email2, String password2) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getEmail() {
         return email;
     }

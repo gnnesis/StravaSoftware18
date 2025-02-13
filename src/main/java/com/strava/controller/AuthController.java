@@ -1,16 +1,37 @@
 package com.strava.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Optional;
+
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import ch.qos.logback.classic.Logger;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
 import com.strava.dto.LoginDTO;
 import com.strava.dto.RegistroDTO;
 import com.strava.dto.UsuarioDTO;
 import com.strava.entity.Usuario;
 import com.strava.server.MetaGateway;
+import com.strava.service.AuthService;
 import com.strava.service.UsuarioService;
 import com.strava.utils.TokenUtil;
 
@@ -23,11 +44,13 @@ import com.strava.service.UsuarioService;
 @RequestMapping("/auth")
 @RestController
 public class AuthController {
-    
-    private final UsuarioService usuarioService;
+	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(AuthController.class);
+	private AuthService authService;
+	private UsuarioService usuarioService;
     
     @Autowired
-    public AuthController(UsuarioService usuarioService) {
+    public AuthController(AuthService authService, UsuarioService usuarioService) {
+        this.authService = authService;
         this.usuarioService = usuarioService;
     }
     
@@ -43,13 +66,34 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<String> login(@RequestBody UsuarioDTO user) {
+        logger.info("Recibida solicitud de login para usuario: {}", user.getEmail());
+        
         try {
-            String token = usuarioService.login(loginDTO);
-            return ResponseEntity.ok("Login exitoso. Token: " + token);
+            // Primero verificamos si el usuario existe
+            Optional<Usuario> userExists = authService.encontraUser(user);
+            //si no existe
+            if (userExists.isEmpty()) {
+                logger.warn("Usuario no encontrado: {}", user.getEmail());
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Usuario no encontrado");
+            }
+            // Intentamos el login
+            Optional<String> token = authService.login(user);
+            if (token.isPresent()) {
+                logger.info("Login exitoso para usuario: {}", user.getEmail());
+                return new ResponseEntity<>(token.get(), HttpStatus.OK);
+            } else {
+                logger.warn("Login fallido para usuario: {}", user.getEmail());
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Credenciales inválidas");
+            }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Error en el login: " + e.getMessage());
+            logger.error("Error durante el login: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error en el proceso de login");
         }
+    
     }
 
     @PostMapping("/logout")
